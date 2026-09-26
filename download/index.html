@@ -106,8 +106,6 @@
     padding-right: 36px;
   }
   input:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
-  .check { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; color: var(--muted); font-size: 0.9rem; }
-  .check input { width: 20px; height: 20px; flex: 0 0 auto; margin-top: 2px; padding: 0; border-radius: 6px; appearance: auto; -webkit-appearance: checkbox; accent-color: var(--accent); }
   .honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
   .status { margin: 0; font-size: 0.92rem; }
   .status.error { color: var(--error); }
@@ -177,11 +175,6 @@
           <input type="text" name="phone" maxlength="80" placeholder="e.g. Pixel 8, Galaxy S24">
         </label>
 
-        <label class="check">
-          <input type="checkbox" name="stay_14_days" value="yes" required>
-          <span>I'll stay in the test for at least 14 days. Google needs that before the app can be released to everyone.</span>
-        </label>
-
         <p class="status" id="form-status" role="status" aria-live="polite"></p>
         <button class="button primary" type="submit" id="submit-button">Request an invite</button>
       </form>
@@ -225,7 +218,6 @@
       var email = form.elements.email.value.trim();
       if (!name) { fail('Please enter your name.'); form.elements.name.focus(); return; }
       if (!form.elements.email.checkValidity() || !email) { fail('Please enter a valid email address.'); form.elements.email.focus(); return; }
-      if (!form.elements.stay_14_days.checked) { fail('Please tick the box to confirm you can stay in the test for 14 days.'); return; }
 
       button.disabled = true;
       button.textContent = 'Sending…';
