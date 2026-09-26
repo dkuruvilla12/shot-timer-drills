@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Shot Timer Drills — Get the App</title>
+<meta name="description" content="Run shooting drills with your Bluetooth shot timer and track every split. Get it on iPhone, or join the Android test.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Shot Timer Drills">
+<meta property="og:description" content="Drills, splits and personal bests with your Bluetooth shot timer. On iPhone now — Android testers wanted.">
+<meta property="og:url" content="https://dkuruvilla12.github.io/shot-timer-drills-privacy/download/">
+<meta property="og:image" content="https://dkuruvilla12.github.io/shot-timer-drills-privacy/download/share.jpg">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="500">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0e0e10">
+<link rel="icon" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0e0e10;
+    --card: #1c1c1e;
+    --text: #f2f2f7;
+    --muted: #a1a1a6;
+    --accent: #ff8c00;
+    --border: #2c2c2e;
+    --field: #111113;
+    --error: #ff6961;
+    --ok: #34c759;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: radial-gradient(120% 60% at 50% 0%, #2a1c0c 0%, var(--bg) 60%) no-repeat, var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+  }
+  .wrap {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: max(32px, env(safe-area-inset-top)) 16px max(48px, env(safe-area-inset-bottom));
+  }
+  header { text-align: center; margin-bottom: 28px; }
+  header img { width: 96px; height: 96px; border-radius: 22px; box-shadow: 0 8px 30px rgba(255, 140, 0, 0.18); }
+  h1 { font-size: 1.75rem; margin: 16px 0 6px; letter-spacing: -0.01em; }
+  .tagline { color: var(--muted); margin: 0 auto; max-width: 30ch; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 22px 20px;
+    margin-bottom: 16px;
+  }
+  .card .eyebrow, .eyebrow {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0 0 4px;
+  }
+  h2 { font-size: 1.2rem; margin: 0 0 6px; }
+  .card p { margin: 0 0 14px; color: var(--muted); font-size: 0.95rem; }
+  .button {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 15px 18px;
+    border-radius: 14px;
+    border: 0;
+    font: inherit;
+    font-weight: 700;
+    font-size: 1.02rem;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .button.primary { background: var(--accent); color: #111; }
+  .button.primary:active { opacity: 0.85; }
+  .button[disabled] { opacity: 0.6; cursor: default; }
+  form { display: grid; gap: 14px; }
+  label { display: grid; gap: 6px; font-weight: 600; font-size: 0.92rem; }
+  .hint { font-weight: 400; color: var(--muted); font-size: 0.82rem; }
+  input, select {
+    width: 100%;
+    font: inherit;
+    font-size: 16px; /* no zoom-on-focus in iOS / Instagram's browser */
+    color: var(--text);
+    background: var(--field);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 14px;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  select {
+    background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+    background-position: calc(100% - 20px) 50%, calc(100% - 14px) 50%;
+    background-size: 6px 6px;
+    background-repeat: no-repeat;
+    padding-right: 36px;
+  }
+  input:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+  .check { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; color: var(--muted); font-size: 0.9rem; }
+  .check input { width: 20px; height: 20px; flex: 0 0 auto; margin-top: 2px; padding: 0; border-radius: 6px; appearance: auto; -webkit-appearance: checkbox; accent-color: var(--accent); }
+  .honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .status { margin: 0; font-size: 0.92rem; }
+  .status.error { color: var(--error); }
+  .done { text-align: center; padding: 8px 0 4px; }
+  .done .tick { font-size: 2.2rem; color: var(--ok); line-height: 1; }
+  .done h3 { margin: 10px 0 6px; font-size: 1.15rem; }
+  .done p { margin: 0; }
+  .steps { margin: 0 0 14px; padding-left: 20px; color: var(--muted); font-size: 0.92rem; }
+  .steps li { margin: 3px 0; }
+  footer { text-align: center; color: var(--muted); font-size: 0.82rem; margin-top: 24px; }
+  footer a, .card a:not(.button) { color: var(--accent); text-decoration: none; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <img src="icon.png" alt="Shot Timer Drills app icon" width="96" height="96">
+    <h1>Shot Timer Drills</h1>
+    <p class="tagline">Run shooting drills with your Bluetooth shot timer and track every split.</p>
+  </header>
+
+  <section class="card" aria-labelledby="ios-title">
+    <p class="eyebrow">iPhone</p>
+    <h2 id="ios-title">Get it on the App Store</h2>
+    <p>Free for iPhone. Works with the ProTimer BT and other Bluetooth shot timers, or type your times in by hand.</p>
+    <a class="button primary" href="https://apps.apple.com/us/app/shot-timer-drills/id6804109678">Download on the App Store</a>
+  </section>
+
+  <section class="card" aria-labelledby="android-title">
+    <p class="eyebrow">Android</p>
+    <h2 id="android-title">Join the Android test</h2>
+    <div id="signup">
+      <p>The Android app is in testing on Google Play. Leave the email of the Google account on your Android phone and you'll get an invite to install it.</p>
+      <form id="tester-form" action="https://formspree.io/f/xdeklybn" method="POST" novalidate>
+        <input type="hidden" name="_subject" value="Android tester request — Shot Timer Drills">
+        <input type="hidden" name="kind" value="android-tester">
+        <div class="honeypot" aria-hidden="true">
+          <label>Leave this empty <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label>
+        </div>
+
+        <label>Name
+          <input type="text" name="name" autocomplete="name" required maxlength="80">
+        </label>
+
+        <label>Google account email
+          <span class="hint">The one signed in to the Play Store on your Android phone — usually a Gmail address.</span>
+          <input type="email" name="email" autocomplete="email" inputmode="email" required maxlength="120" placeholder="you@gmail.com">
+        </label>
+
+        <label>Your shot timer <span class="hint">(optional)</span>
+          <select name="timer">
+            <option value="">Choose one</option>
+            <option>Competition Electronics ProTimer BT</option>
+            <option>AMG Commander</option>
+            <option>SG Timer / Timer 2 / GO</option>
+            <option>DAA Edge</option>
+            <option>Kestrel KST1000</option>
+            <option>Other timer</option>
+            <option>No timer yet</option>
+          </select>
+        </label>
+
+        <label>Phone model <span class="hint">(optional)</span>
+          <input type="text" name="phone" maxlength="80" placeholder="e.g. Pixel 8, Galaxy S24">
+        </label>
+
+        <label class="check">
+          <input type="checkbox" name="stay_14_days" value="yes" required>
+          <span>I'll stay in the test for at least 14 days. Google needs that before the app can be released to everyone.</span>
+        </label>
+
+        <p class="status" id="form-status" role="status" aria-live="polite"></p>
+        <button class="button primary" type="submit" id="submit-button">Request an invite</button>
+      </form>
+    </div>
+
+    <div id="thanks" class="done" hidden>
+      <div class="tick" aria-hidden="true">✓</div>
+      <h3>You're on the list</h3>
+      <p>You'll get an email with the test link once you've been added, usually within a day or two. Then:</p>
+      <ol class="steps" style="text-align:left; margin-top:12px;">
+        <li>Open the link on your Android phone.</li>
+        <li>Tap <strong>Become a tester</strong>.</li>
+        <li>Install Shot Timer Drills from Google Play.</li>
+      </ol>
+    </div>
+  </section>
+
+  <footer>
+    <p>Your email is used only to invite you to the Android test and to reach you about it. It isn't shared or used for marketing.</p>
+    <p><a href="../">Privacy Policy</a> · <a href="../support/">Support</a></p>
+  </footer>
+</main>
+
+<script>
+  (function () {
+    var form = document.getElementById('tester-form');
+    var status = document.getElementById('form-status');
+    var button = document.getElementById('submit-button');
+
+    function fail(message) {
+      status.textContent = message;
+      status.className = 'status error';
+    }
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      status.textContent = '';
+      status.className = 'status';
+
+      var name = form.elements.name.value.trim();
+      var email = form.elements.email.value.trim();
+      if (!name) { fail('Please enter your name.'); form.elements.name.focus(); return; }
+      if (!form.elements.email.checkValidity() || !email) { fail('Please enter a valid email address.'); form.elements.email.focus(); return; }
+      if (!form.elements.stay_14_days.checked) { fail('Please tick the box to confirm you can stay in the test for 14 days.'); return; }
+
+      button.disabled = true;
+      button.textContent = 'Sending…';
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      }).then(function (response) {
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        document.getElementById('signup').hidden = true;
+        document.getElementById('thanks').hidden = false;
+      }).catch(function () {
+        button.disabled = false;
+        button.textContent = 'Request an invite';
+        fail('That didn’t go through. Check your connection and try again, or email dskuruvilla@pm.me.');
+      });
+    });
+  })();
+</script>
+</body>
+</html>
