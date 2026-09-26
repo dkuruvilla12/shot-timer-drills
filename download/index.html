@@ -80,6 +80,9 @@
   .button.primary { background: var(--accent); color: #111; }
   .button.primary:active { opacity: 0.85; }
   .button[disabled] { opacity: 0.6; cursor: default; }
+  .store-badge { display: block; width: fit-content; margin: 4px auto 0; padding: 4px; line-height: 0; border-radius: 12px; }
+  .store-badge img { display: block; width: 180px; height: auto; }
+  .store-badge:active { opacity: 0.85; }
   form { display: grid; gap: 14px; }
   label { display: grid; gap: 6px; font-weight: 600; font-size: 0.92rem; }
   .hint { font-weight: 400; color: var(--muted); font-size: 0.82rem; }
@@ -131,7 +134,9 @@
     <p class="eyebrow">iPhone</p>
     <h2 id="ios-title">Get it on the App Store</h2>
     <p>Free for iPhone. Works with the ProTimer BT and other Bluetooth shot timers, or type your times in by hand.</p>
-    <a class="button primary" href="https://apps.apple.com/us/app/shot-timer-drills/id6804109678">Download on the App Store</a>
+    <a class="store-badge" href="https://apps.apple.com/us/app/shot-timer-drills/id6804109678">
+      <img src="app-store-badge.svg" alt="Download on the App Store" width="180" height="60">
+    </a>
   </section>
 
   <section class="card" aria-labelledby="android-title">
