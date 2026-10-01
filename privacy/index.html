@@ -23,7 +23,7 @@
   <header class="page-head">
     <p class="eyebrow">Shot Timer Drills</p>
     <h1>Privacy Policy</h1>
-    <p class="meta">Effective date: September 26, 2026</p>
+    <p class="meta">Effective date: October 1, 2026</p>
   </header>
   <article class="card prose">
     <p>Shot Timer Drills ("the app") is available for iPhone (with an Apple Watch companion) and for Android. It is built to keep your training data on your own devices. This policy explains, plainly, what the app stores, what little it sends, and where. Where the iPhone and Android versions differ, it says so.</p>
@@ -31,7 +31,6 @@
     <h2>Summary</h2>
     <p><strong>There are no accounts, no advertising, no analytics, and no tracking.</strong> Everything you enter — drills, session history, shot times, shooter names, personal bests, gear, notes and videos — stays on your device. On iPhone it can also sync to your own private iCloud account; on Android it can be included in your phone's own Google backup. The developer never receives it and has no server it could be sent to.</p>
     <p><strong>The one thing the app sends to the developer is a timer diagnostic report</strong>, described under <a href="#timer-reports">Timer reports</a>. These reports describe how a Bluetooth shot timer behaved. They never contain shooter names, drill names, notes, or scores. Automatic reports can be turned off at any time in Settings.</p>
-    <p>On iPhone, the optional Buddy Sync feature shares data with one person you personally invite — never with the developer.</p>
 
     <h2>What data the app stores, and where</h2>
     <p>The app stores the following on your device:</p>
@@ -46,10 +45,6 @@
     <p><strong>On iPhone</strong>, this is stored with Apple's SwiftData framework. If iCloud is available and signed in, it also syncs to your own private CloudKit database — the same private, per-user storage Apple provides to any app for iCloud sync — so it carries over to your other devices signed into the same iCloud account. That database is <strong>yours</strong>: Apple's private CloudKit containers are only ever readable by the account they belong to. The developer has no access to it and no way to retrieve, view, or restore your data from it. If you're signed out of iCloud, or have it turned off, the app works exactly the same way using on-device storage only.</p>
     <p><strong>On Android</strong>, this is stored in the app's private storage on your phone. If you have Android's backup turned on, your drills, history, shooters and settings are included in your phone's own backup to your Google account, so they can come back when you set up a new phone. That backup is handled by Android and Google under your account; the developer cannot see or access it. Recorded video clips and the timer log are left out of the backup.</p>
 
-    <h2>Buddy Sync (iPhone only)</h2>
-    <p>Buddy Sync is an optional feature, off by default, that lets two people keep their drills and history in sync with each other. Turning it on for a shooter (from that shooter's profile) sends an invite link — over Messages, AirDrop, or however you choose to send it — to one specific person you pick. Nothing is shared until you send that link and the other person accepts it.</p>
-    <p>Once accepted, it works through Apple's CloudKit sharing, using a private, shared record zone between just the two of you — the same technology Apple provides for sharing a photo album or a note, applied here to drill and range-trip data instead. Drills and equipment (gun/carry style names) sync both ways automatically. A shooter's range trips, sessions, and personal bests only sync if that shooter's own "include this shooter's history" switch is turned on — so enabling Buddy Sync for one shooter never exposes another shooter's history on the same device without a separate, explicit choice.</p>
-    <p>As with private iCloud sync, this data is never sent to the developer or to any server we operate — it travels only between your device and your buddy's device, through Apple's CloudKit infrastructure, under the two of you as the participants. You can turn off syncing for a pairing at any time from that shooter's Buddy Sync screen; data already synced stays on both devices, but nothing new is exchanged afterward.</p>
 
     <h2>Bluetooth</h2>
     <p>The app can connect over Bluetooth Low Energy to a supported shot timer (Competition Electronics ProTimer BT, AMG Commander, SG Timer, DAA Edge, or Kestrel KST1000), if you choose to pair one, in order to read shot times during a drill. This connection is local, device-to-device — shot-timer data is not sent anywhere beyond your phone and the timer itself, except for the timer reports described below.</p>
@@ -84,7 +79,7 @@
     <p>The app contains no analytics, no advertising, no tracking, and no crash-reporting services, and it never sells or shares your data. Its only network activity is:</p>
     <ul>
       <li>timer reports, sent to Formspree as described above;</li>
-      <li>on iPhone, your device syncing through Apple's CloudKit — with your own private iCloud account, and with a Buddy Sync pairing only if you've turned that on and invited someone;</li>
+      <li>on iPhone, your device syncing through Apple's CloudKit — with your own private iCloud account;</li>
       <li>on Android, Android's own backup to your Google account if you have it turned on.</li>
     </ul>
     <p>The app is built with standard platform libraries (Apple's and Google's, plus open-source Bluetooth and media libraries on Android) that run on your device and don't send your data anywhere.</p>
