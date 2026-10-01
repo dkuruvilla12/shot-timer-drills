@@ -41,13 +41,13 @@
     -webkit-text-size-adjust: 100%;
   }
   .wrap {
-    max-width: 480px;
+    max-width: 520px;
     margin: 0 auto;
     padding: 16px 16px max(48px, env(safe-area-inset-bottom));
   }
   header { text-align: center; margin-bottom: 28px; }
   header img { width: 96px; height: 96px; border-radius: 22px; box-shadow: 0 8px 30px rgba(255, 140, 0, 0.18); }
-  h1 { font-size: 1.75rem; margin: 16px 0 6px; letter-spacing: -0.01em; }
+  h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); line-height: 1.08; margin: 18px 0 10px; letter-spacing: -0.02em; }
   .tagline { color: var(--muted); margin: 0 auto; max-width: 30ch; }
   .card {
     background: var(--card);
@@ -117,8 +117,8 @@
   .done p { margin: 0; }
   .steps { margin: 0 0 14px; padding-left: 20px; color: var(--muted); font-size: 0.92rem; }
   .steps li { margin: 3px 0; }
-  footer { text-align: center; color: var(--muted); font-size: 0.82rem; margin-top: 24px; }
-  footer a, .card a:not(.button) { color: var(--accent); text-decoration: none; }
+  .form-note { text-align: center; color: var(--muted); font-size: 0.82rem; margin-top: 24px; }
+  .card a:not(.button) { color: var(--accent); text-decoration: none; }
   [hidden] { display: none !important; }
 </style>
 </head>
@@ -135,7 +135,7 @@
 <main class="wrap">
   <header>
     <img src="icon.png" alt="Shot Timer Drills app icon" width="96" height="96">
-    <h1>Shot Timer Drills</h1>
+    <h1>Get the app</h1>
     <p class="tagline">Run shooting drills with your Bluetooth shot timer and track every split.</p>
   </header>
 
@@ -203,11 +203,17 @@
     </div>
   </section>
 
-  <footer>
-    <p>Your email is used only to invite you to the Android test and to reach you about it. It isn't shared or used for marketing.</p>
-    <p><a href="../privacy/">Privacy Policy</a> · <a href="../support/">Support</a></p>
-  </footer>
+  <p class="form-note">Your email is used only to invite you to the Android test and to reach you about it. It isn't shared or used for marketing.</p>
 </main>
+<footer class="site-footer">
+  <span>© 2026 Shot Timer Drills</span>
+  <div class="links">
+    <a href="/guides/">How-To Guides</a>
+    <a href="/support/">Support</a>
+    <a href="/contact/">Contact</a>
+    <a href="/privacy/">Privacy Policy</a>
+  </div>
+</footer>
 
 <script>
   (function () {

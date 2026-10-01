@@ -2,101 +2,42 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0e0e10">
+<link rel="icon" href="/download/icon.png">
 <script>if (location.hostname === 'dkuruvilla12.github.io') location.replace('https://shottimerdrills.com' + (location.pathname.replace(/^\/shot-timer-drills/, '') || '/') + location.hash);</script>
 <title>Support — Shot Timer Drills</title>
 <link rel="stylesheet" href="/site.css">
 <style>
-  :root {
-    color-scheme: light dark;
-    --bg: #f9f9fb;
-    --card: #ffffff;
-    --text: #1c1c1e;
-    --muted: #6b6b70;
-    --accent: #ff8c00;
-    --border: #e5e5ea;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #0e0e10;
-      --card: #1c1c1e;
-      --text: #f2f2f7;
-      --muted: #a1a1a6;
-      --border: #2c2c2e;
-    }
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-  }
-  .wrap {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 16px 20px 80px;
-  }
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 36px;
-  }
-  h1 {
-    font-size: 1.75rem;
-    margin: 0 0 4px;
-  }
-  .eyebrow {
-    color: var(--accent);
-    font-weight: 600;
-    font-size: 0.8rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin: 0 0 8px;
-  }
-  .sub {
-    color: var(--muted);
-    font-size: 0.95rem;
-    margin: 0 0 32px;
-  }
-  h2 {
-    font-size: 1.1rem;
-    margin: 32px 0 8px;
-  }
-  p, li { color: var(--text); }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  .email-button {
-    display: inline-block;
-    margin-top: 8px;
-    padding: 12px 22px;
-    background: var(--accent);
-    color: #fff;
-    border-radius: 999px;
-    font-weight: 600;
-  }
-  .email-button:hover { text-decoration: none; opacity: 0.92; }
-  .faq dt {
-    font-weight: 600;
-    margin-top: 18px;
-  }
-  .faq dd {
-    margin: 4px 0 0;
-    color: var(--muted);
-  }
+  .contact-card { text-align: center; }
+  .contact-card p { color: var(--muted); font-size: 0.95rem; margin: 18px auto 0; max-width: 56ch; }
+  .contact-card .address { color: var(--text); font-weight: 600; margin-top: 10px; }
+  .guides-card { display: flex; gap: 24px; align-items: center; justify-content: space-between; }
+  .guides-card h2 { font-size: 1.2rem; margin: 0 0 6px; }
+  .guides-card p { color: var(--muted); font-size: 0.95rem; margin: 0; }
+  .guides-card .button { flex-shrink: 0; }
+  .section-title { font-size: 1.6rem; letter-spacing: -0.015em; text-align: center; margin: 56px 0 20px; }
+  .faq { margin: 0; }
+  .faq-item { padding: 24px 26px; }
+  .faq dt { font-weight: 700; font-size: 1.05rem; margin: 0 0 8px; }
+  .faq dd { margin: 0; }
+  .faq dd p { margin: 8px 0 0; color: #d1d1d6; }
+  .faq dd p:first-child { margin-top: 0; }
   .platform {
     display: inline-block;
     font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
+    font-weight: 700;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--accent);
     margin-right: 4px;
   }
-  .faq dd p { margin: 6px 0 0; color: var(--muted); }
-  .faq dd p:first-child { margin-top: 0; }
+  .footnote { text-align: center; color: var(--muted); font-size: 0.9rem; margin: 36px 0 0; }
+  @media (max-width: 560px) {
+    .guides-card { flex-direction: column; align-items: stretch; text-align: left; }
+    .contact-card .button { width: 100%; }
+    .faq-item { padding: 20px; }
+  }
 </style>
 </head>
 <body>
@@ -109,74 +50,93 @@
     <li><a href="/privacy/">Privacy</a></li>
   </ul>
 </nav>
-<div class="wrap">
-  <div class="card">
-    <p class="eyebrow">Shot Timer Drills</p>
+<main class="page">
+  <header class="page-head">
+    <p class="eyebrow">Help</p>
     <h1>Support</h1>
-    <p class="sub">For iPhone and Android. Questions, bug reports, or feature requests — reach the developer directly.</p>
+    <p class="lede">For iPhone and Android. Questions, bug reports, or feature requests — reach the developer directly.</p>
+  </header>
 
-    <p>
-      <a class="email-button" href="mailto:support@shottimerdrills.com?subject=Shot%20Timer%20Drills%20Support">
-        Email support@shottimerdrills.com
-      </a>
-    </p>
-    <p style="color: var(--muted); font-size: 0.95rem;">You can also write from inside the app: <strong>Settings → Send Feedback</strong> opens your email app, already addressed. A screenshot and a line about what you were doing helps a lot. Please mention whether you're on iPhone or Android.</p>
+  <section class="card contact-card">
+    <a class="button primary" href="mailto:support@shottimerdrills.com?subject=Shot%20Timer%20Drills%20Support">Email support</a>
+    <p class="address">support@shottimerdrills.com</p>
+    <p>You can also write from inside the app: <strong>Settings → Send Feedback</strong> opens your email app, already addressed. A screenshot and a line about what you were doing helps a lot. Please mention whether you're on iPhone or Android.</p>
+  </section>
 
-    <h2>How-To Guides</h2>
-    <p>Six short guides covering the app's most useful features, each with a screenshot: running a drill, planning a full Range Day, reading the shot-by-shot chart, tracking history by trip, and more. The screenshots are from iPhone; the Android app has the same features, laid out for Android.</p>
-    <p><a href="../guides/">Browse the How-To Guides &rarr;</a></p>
+  <section class="card guides-card">
+    <div>
+      <h2>How-To Guides</h2>
+      <p>Six short guides covering the app's most useful features, each with a screenshot: running a drill, planning a full Range Day, reading the shot-by-shot chart, tracking history by trip, and more. The screenshots are from iPhone; the Android app has the same features, laid out for Android.</p>
+    </div>
+    <a class="button" href="/guides/">Browse the guides</a>
+  </section>
 
-    <h2>Common questions</h2>
-    <dl class="faq">
+  <h2 class="section-title">Common questions</h2>
+  <dl class="faq">
+    <div class="faq-item card">
       <dt>Which shot timers does this app work with?</dt>
       <dd>
         <p>The Competition Electronics ProTimer BT is fully supported and tested on both iPhone and Android. The SG Timer (Timer 2 / GO), AMG Commander, DAA Edge and Kestrel KST1000 are supported too, but have had less real-world testing — if you have one, a timer report (see below) helps a great deal.</p>
         <p>No timer? You can type your times in by hand on either platform. <span class="platform">iPhone</span> also has a simulated timer (Settings → Timer Setup) for trying the app's flow without hardware.</p>
       </dd>
-
+    </div>
+    <div class="faq-item card">
       <dt>The app isn't finding my timer — what should I check?</dt>
       <dd>
         <p>Make sure Bluetooth is on, the timer is powered on and nearby, and it isn't connected to another app or phone — a timer talks to one device at a time. Try turning the timer off and back on if it doesn't connect on the first attempt.</p>
         <p><span class="platform">iPhone</span> Allow Bluetooth for the app in Settings → Privacy &amp; Security → Bluetooth.</p>
         <p><span class="platform">Android</span> Allow "Nearby devices" when the app asks (Android 12 and later). On Android 8 to 11, Android needs the Location permission and Location turned on before any app can find Bluetooth devices; the app never reads or stores your location.</p>
       </dd>
-
+    </div>
+    <div class="faq-item card">
       <dt>Shot times stop coming through when my Android phone is locked.</dt>
       <dd>
         <p>While a timer is connected, Android shows an ongoing "Timer connected" notification — that's what keeps the connection alive in the background. If you don't see it, allow notifications for Shot Timer Drills (Settings → Apps → Shot Timer Drills → Notifications). Some phones also stop background apps to save battery; setting the app's Battery usage to "Unrestricted" in the same place prevents that. Tap Disconnect in the notification when you're done.</p>
       </dd>
-
+    </div>
+    <div class="faq-item card">
       <dt>Is my data backed up anywhere?</dt>
       <dd>
         <p>Your drills and history are stored on your device. <span class="platform">iPhone</span> If iCloud is on, they also sync to your own private iCloud account. <span class="platform">Android</span> If Android's backup is on, they're included in your phone's backup to your Google account.</p>
         <p>On either platform, <strong>Settings → Export All Data</strong> saves everything — shooters, drills, runs and personal bests — as one file you can keep anywhere. You can also export history or drills as CSV spreadsheets.</p>
       </dd>
-
+    </div>
+    <div class="faq-item card">
       <dt>Can I move my data between iPhone and Android?</dt>
       <dd>
         <p>Yes. Use Export All Data on one phone, send the file to the other (email, a messaging app, or cloud storage like Google Drive or iCloud Drive), and open it with Import in the app's Settings. Import only adds what's new: shooters and drills with the same name are matched, not copied, and nothing already on the phone is overwritten.</p>
       </dd>
-
+    </div>
+    <div class="faq-item card">
       <dt>Where do my recorded videos go?</dt>
       <dd>
         <p>With Record Video on, each string is filmed with your phone's camera and saved to your photo library — on Android, in Movies/Shot Timer Drills. Videos never leave your phone unless you share them.</p>
       </dd>
-
+    </div>
+    <div class="faq-item card">
       <dt>What is a timer report?</dt>
       <dd>
         <p>A short, anonymous summary of how your timer connected and how many shots it sent, so the developer can confirm each brand of timer works. It never includes names, drills or scores. The app sends a couple automatically and you can turn them off at any time (<span class="platform">iPhone</span> Settings → Timer Diagnostics; <span class="platform">Android</span> Settings → Share Timer Diagnostics). You can also send one yourself from Timer Setup → Send Timer Report if something isn't working. Details are in the <a href="/privacy/#timer-reports">Privacy Policy</a>.</p>
       </dd>
-
+    </div>
+    <div class="faq-item card">
       <dt>Can I add my own drills?</dt>
       <dd>
         <p>Yes — from the Drills tab, build a custom drill from scratch with any target type, scoring method, distance, and par time, or import drills from a CSV file.</p>
       </dd>
-    </dl>
+    </div>
+  </dl>
 
-    <p style="margin-top: 32px; color: var(--muted); font-size: 0.9rem;">
-      For how the app handles your data, see the <a href="../privacy/">Privacy Policy</a>.
-    </p>
+  <p class="footnote">For how the app handles your data, see the <a href="/privacy/">Privacy Policy</a>.</p>
+</main>
+<footer class="site-footer">
+  <span>© 2026 Shot Timer Drills</span>
+  <div class="links">
+    <a href="/guides/">How-To Guides</a>
+    <a href="/support/">Support</a>
+    <a href="/contact/">Contact</a>
+    <a href="/privacy/">Privacy Policy</a>
   </div>
-</div>
+</footer>
 </body>
 </html>

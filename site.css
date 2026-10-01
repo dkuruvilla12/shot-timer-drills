@@ -1,4 +1,31 @@
-/* Shared site menu. Each page defines --text, --muted, --accent and --border. */
+/* Shared look for every page, matching the home page: dark, amber glow, orange accent.
+   Pages may add their own <style> after this file for page-only rules. */
+:root {
+  color-scheme: dark;
+  --bg: #0e0e10;
+  --card: #1c1c1e;
+  --card-2: #151517;
+  --text: #f2f2f7;
+  --muted: #a1a1a6;
+  --accent: #ff8c00;
+  --border: #2c2c2e;
+  --frame: #2a2a2d;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: radial-gradient(120% 50% at 50% 0%, #2a1c0c 0%, var(--bg) 70%) no-repeat, var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+img { max-width: 100%; }
+
+/* Menu */
 .site-nav {
   max-width: 1080px;
   margin: 0 auto;
@@ -8,7 +35,6 @@
   justify-content: space-between;
   gap: 12px 24px;
   flex-wrap: wrap;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   line-height: 1.3;
 }
 .site-nav .brand {
@@ -18,8 +44,8 @@
   color: var(--text);
   font-weight: 700;
   font-size: 1rem;
-  text-decoration: none;
 }
+.site-nav .brand:hover { text-decoration: none; }
 .site-nav .brand img { width: 32px; height: 32px; border-radius: 8px; }
 .site-nav ul {
   list-style: none;
@@ -30,11 +56,112 @@
   gap: 4px 22px;
   font-size: 0.95rem;
 }
-.site-nav ul a { color: var(--muted); text-decoration: none; }
+.site-nav ul a { color: var(--muted); }
 .site-nav ul a:hover { color: var(--text); text-decoration: none; }
 .site-nav ul a[aria-current="page"] { color: var(--accent); font-weight: 600; }
+
+/* Page layout */
+.page { max-width: 760px; margin: 0 auto; padding: 0 20px 72px; }
+.page.wide { max-width: 1000px; }
+.page-head { text-align: center; padding: 40px 0 40px; }
+.eyebrow {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0 0 10px;
+}
+.page-head h1 {
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  margin: 0 0 14px;
+}
+.page-head .lede { color: var(--muted); font-size: 1.12rem; margin: 0 auto; max-width: 52ch; }
+.page-head .meta { color: var(--muted); font-size: 0.9rem; margin: 10px 0 0; }
+
+/* Cards and prose */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 32px;
+}
+.card + .card { margin-top: 16px; }
+.prose h2 {
+  font-size: 1.3rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin: 36px 0 10px;
+  scroll-margin-top: 20px;
+}
+.prose h2:first-child { margin-top: 0; }
+.prose p, .prose li { color: #d1d1d6; }
+.prose strong { color: var(--text); }
+.prose ul, .prose ol { padding-left: 1.3em; }
+.prose li { margin: 6px 0; }
+.prose .note {
+  margin-top: 36px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+}
+
+/* Buttons */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 54px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font: inherit;
+  font-weight: 700;
+  font-size: 1rem;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  cursor: pointer;
+  text-align: center;
+}
+.button:hover { border-color: var(--accent); text-decoration: none; }
+.button.primary { background: var(--accent); border-color: var(--accent); color: #111; }
+.button.primary:hover { opacity: 0.92; }
+
+/* Phone screenshot frame (same as the home page) */
+.phone {
+  border-radius: 30px;
+  overflow: hidden;
+  border: 6px solid var(--frame);
+  background: #000;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+.phone img { display: block; width: 100%; height: auto; }
+
+/* Footer */
+.site-footer {
+  max-width: 1080px;
+  margin: 0 auto;
+  border-top: 1px solid var(--border);
+  padding: 28px 20px max(36px, env(safe-area-inset-bottom));
+  color: var(--muted);
+  font-size: 0.88rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+}
+.site-footer .links { display: flex; flex-wrap: wrap; gap: 18px; }
+.site-footer .links a { color: var(--muted); }
+.site-footer .links a:hover { color: var(--text); text-decoration: none; }
 
 @media (max-width: 560px) {
   .site-nav { justify-content: center; }
   .site-nav ul { width: 100%; justify-content: center; gap: 4px 20px; }
+  .page-head { padding: 24px 0 28px; }
+  .card { padding: 24px 20px; }
+  .site-footer { justify-content: center; text-align: center; }
+  .site-footer .links { justify-content: center; }
 }
