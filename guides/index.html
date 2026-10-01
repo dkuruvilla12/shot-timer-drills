@@ -7,6 +7,8 @@
 <link rel="icon" href="/download/icon.png">
 <script>if (location.hostname === 'dkuruvilla12.github.io') location.replace('https://shottimerdrills.com' + (location.pathname.replace(/^\/shot-timer-drills/, '') || '/') + location.hash);</script>
 <title>How-To Guides — Shot Timer Drills</title>
+<meta name="description" content="Short guides to Shot Timer Drills: running a drill with your Bluetooth shot timer, recording video with your times on it, Range Days, progress tracking and building drills.">
+<link rel="canonical" href="https://shottimerdrills.com/guides/">
 <link rel="stylesheet" href="/site.css">
 <style>
   .toc { margin: 0 auto 24px; padding: 22px 26px; }
@@ -23,25 +25,31 @@
   .toc li::before { content: counter(g, decimal-leading-zero); color: var(--accent); font-weight: 700; font-size: 0.8rem; margin-right: 10px; }
   .toc a { color: var(--text); }
   .toc a:hover { color: var(--accent); text-decoration: none; }
+  .badge {
+    display: inline-block; margin-left: 8px; padding: 1px 8px; border-radius: 999px;
+    background: rgba(255, 140, 0, 0.15); color: var(--accent);
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; vertical-align: 2px;
+  }
 
   .guide {
     display: grid;
     grid-template-columns: 240px 1fr;
     gap: 56px;
     align-items: center;
-    padding: 48px 0;
+    padding: 56px 0;
     border-top: 1px solid var(--border);
     scroll-margin-top: 20px;
   }
-  .guide:nth-of-type(even) { grid-template-columns: 1fr 240px; }
-  .guide:nth-of-type(even) .shot { order: 1; }
-  .guide .content .num { color: var(--accent); font-weight: 700; font-size: 0.78rem; letter-spacing: 0.08em; margin: 0; }
-  .guide h2 { font-size: 1.6rem; line-height: 1.2; letter-spacing: -0.01em; margin: 6px 0 14px; }
-  .guide p { margin: 0 0 12px; color: #d1d1d6; }
-  .guide ol, .guide ul { margin: 0 0 12px; padding-left: 1.3em; color: #d1d1d6; }
-  .guide li { margin: 8px 0; }
-  .guide strong { color: var(--text); }
-  .guide .tip {
+  .guide.flip { grid-template-columns: 1fr 240px; }
+  .guide.flip .shot { order: 1; }
+  .num { color: var(--accent); font-weight: 700; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; margin: 0; }
+  .guide h2, .feature-guide h2 { font-size: 1.7rem; line-height: 1.2; letter-spacing: -0.015em; margin: 6px 0 14px; }
+  .feature-guide h3 { font-size: 1.15rem; margin: 0 0 10px; }
+  .guide p, .feature-guide p { margin: 0 0 12px; color: #d1d1d6; }
+  .guide ol, .guide ul, .feature-guide ol { margin: 0 0 12px; padding-left: 1.3em; color: #d1d1d6; }
+  .guide li, .feature-guide li { margin: 8px 0; }
+  .guide strong, .feature-guide strong { color: var(--text); }
+  .tip {
     background: var(--card);
     border: 1px solid var(--border);
     border-left: 3px solid var(--accent);
@@ -49,13 +57,33 @@
     padding: 12px 16px;
     font-size: 0.93rem;
     color: var(--muted);
-    margin-top: 12px;
+    margin-top: 14px;
   }
-  .footnote { text-align: center; color: var(--muted); font-size: 0.92rem; margin: 24px 0 0; padding-top: 32px; border-top: 1px solid var(--border); }
-  @media (max-width: 720px) {
+  .tip strong { color: var(--text); }
+  .feature-guide .card .tip { background: var(--card-2); }
+
+  /* Record Video: the featured guide with several screenshots */
+  .feature-guide { border-top: 1px solid var(--border); padding: 56px 0; scroll-margin-top: 20px; }
+  .feature-guide .intro { text-align: center; max-width: 640px; margin: 0 auto 36px; }
+  .feature-guide .intro p { color: var(--muted); font-size: 1.05rem; }
+  .shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; max-width: 760px; margin: 0 auto 40px; }
+  .shots figure { margin: 0; }
+  .shots figcaption { text-align: center; color: var(--muted); font-size: 0.88rem; margin-top: 12px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .two-col .card { padding: 26px; }
+  .two-col .card + .card { margin-top: 0; }
+
+  .footnote { text-align: center; color: var(--muted); font-size: 0.92rem; margin: 0; padding-top: 32px; border-top: 1px solid var(--border); }
+
+  @media (max-width: 760px) {
     .toc ol { grid-template-columns: 1fr; }
-    .guide, .guide:nth-of-type(even) { grid-template-columns: 1fr; gap: 28px; padding: 36px 0; }
-    .guide .shot, .guide:nth-of-type(even) .shot { order: 0; width: 230px; margin: 0 auto; }
+    .guide, .guide.flip { grid-template-columns: 1fr; gap: 28px; padding: 40px 0; }
+    .guide .shot, .guide.flip .shot { order: 0; width: 230px; margin: 0 auto; }
+    .feature-guide { padding: 40px 0; }
+    .shots { gap: 10px; }
+    .shots .phone { border-width: 4px; border-radius: 18px; }
+    .shots figcaption { font-size: 0.75rem; }
+    .two-col { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -73,107 +101,163 @@
   <header class="page-head">
     <p class="eyebrow">Learn the app</p>
     <h1>How-To Guides</h1>
-    <p class="lede">Six things worth knowing about the app, each in under a minute. Screenshots are from the current version.</p>
+    <p class="lede">Seven things worth knowing about Shot Timer Drills, each in a minute or two. Screenshots are from the current iPhone app; the Android app has the same features, laid out for Android.</p>
   </header>
 
   <nav class="toc card" aria-label="Guides on this page">
     <p>On this page</p>
     <ol>
-      <li><a href="#live-timer">Run your first drill</a></li>
+      <li><a href="#run-a-drill">Run a drill with your timer</a></li>
+      <li><a href="#record-video">Record video with your times on it</a><span class="badge">New</span></li>
       <li><a href="#range-day">Plan a full Range Day</a></li>
-      <li><a href="#shot-by-shot">See exactly where you gained or lost time</a></li>
-      <li><a href="#history">Track your progress, by drill or by trip</a></li>
-      <li><a href="#drills">Find, favorite, and duplicate drills</a></li>
+      <li><a href="#shot-by-shot">See where you gained or lost time</a></li>
+      <li><a href="#history">Track your progress</a></li>
+      <li><a href="#drills">Find, favorite and build drills</a></li>
       <li><a href="#home">Jump back in from Home</a></li>
     </ol>
   </nav>
 
-  <div class="guide" id="live-timer">
-    <div class="shot phone"><img src="images/01_live_timer.jpg" alt="Live timer screen showing a captured time and shot splits"></div>
+  <section class="guide" id="run-a-drill">
+    <div class="shot phone"><img src="images/run-drill.jpg" alt="A Bill Drill stage with the captured time, every split, and hit counters" width="560" height="1217" loading="lazy"></div>
     <div class="content">
       <p class="num">01</p>
-      <h2>Run your first drill</h2>
+      <h2>Run a drill with your timer</h2>
       <p>Every drill runs the same way, whether it's one of the built-in standards or one you built yourself:</p>
       <ol>
-        <li>Open a drill and tap <strong>Start Drill Now</strong>.</li>
-        <li>Tap <strong>Shooter Ready</strong>. The beep fires after a random delay, and your Competition Electronics ProTimer BT streams shots in live — no typing times by hand.</li>
-        <li>When the string ends, your time and every split land on screen automatically.</li>
-        <li>Count hits with the +/&minus; steppers, or tap <strong>Fill Remaining as A</strong> when every round landed clean.</li>
+        <li>Open a drill from the Drills tab and tap <strong>Start Drill</strong>. From Quick Start, Jump Back In or a Range Day you'll see the drill's briefing first; tap <strong>Begin Drill</strong>.</li>
+        <li>Tap <strong>Shooter Ready</strong>. The app arms your timer, and the beep fires after a random delay. You can also just press START on the timer.</li>
+        <li>Shots come in live. When the string ends, your time and every split are on screen, with nothing to type.</li>
+        <li>Count hits with the <strong>+</strong> and <strong>−</strong> buttons, or tap <strong>Fill Remaining as A</strong> when every round landed clean.</li>
+        <li>Tap <strong>Save &amp; Shoot Again</strong> for another string, or <strong>Next Stage</strong> / <strong>Finish Drill</strong> to move on.</li>
       </ol>
-      <div class="tip">No timer on hand? Settings → Timer Setup → <strong>Use simulated timer</strong> generates realistic strings so you can run the whole flow without hardware — it's forced on automatically in the iOS Simulator.</div>
+      <div class="tip"><strong>Shooting alone?</strong> Tap the delay at the top right of the stage and pick <strong>Solo Running (15–25s)</strong> so you have time to get set. No timer with you? Tap <strong>Enter Manually</strong> and type your time in.</div>
+      <div class="tip"><strong>Dry fire:</strong> switch the Drills tab to <strong>Dry Fire</strong>. With no timer connected, your phone plays the start and par beeps, and you count how many reps were clean.</div>
     </div>
-  </div>
+  </section>
 
-  <div class="guide" id="range-day">
-    <div class="shot phone"><img src="images/02_range_day.jpg" alt="Range Day trip screen showing three completed drills"></div>
-    <div class="content">
-      <p class="num">02</p>
-      <h2>Plan a full Range Day</h2>
-      <p>Line up everything you want to run before you even leave the house:</p>
-      <ol>
-        <li>Home → <strong>Plan Range Trip</strong> → add whichever drills you're bringing, and who's shooting.</li>
-        <li>On the range, open the trip and tap <strong>Run Full Range Day</strong> to move through every drill in order — or tap the play button on any single one to run it out of sequence.</li>
-        <li>Each finished drill gets a green checkmark, and <strong>Resume Range Day</strong> always picks up on the next one you haven't shot yet.</li>
-      </ol>
-      <div class="tip">Results are tracked against each drill, not against the trip — open any drill from History to see every run of it, trip or no trip.</div>
+  <section class="feature-guide" id="record-video">
+    <div class="intro">
+      <p class="num">02 · New</p>
+      <h2>Record video with your times on it</h2>
+      <p>Film every string and get a video with your time and splits on screen, synced to the beep. Record in the app as you shoot, or add a video someone else filmed.</p>
     </div>
-  </div>
 
-  <div class="guide" id="shot-by-shot">
-    <div class="shot phone"><img src="images/03_results_chart.jpg" alt="Results screen with a shot-by-shot line chart of split times"></div>
+    <div class="shots">
+      <figure>
+        <div class="phone"><img src="images/record-video.jpg" alt="Stage screen showing the camera preview and the Shooter Ready button" width="560" height="1220" loading="lazy"></div>
+        <figcaption>Film the string</figcaption>
+      </figure>
+      <figure>
+        <div class="phone"><img src="images/shot-view-sync.jpg" alt="Shot View sync screen with the video filmstrip and in, beep and out points" width="560" height="1220" loading="lazy"></div>
+        <figcaption>Sync to the beep</figcaption>
+      </figure>
+      <figure>
+        <div class="phone"><img src="images/video-overlay.jpg" alt="Video of a shooter with the total time and splits on screen" width="560" height="1220" loading="lazy"></div>
+        <figcaption>Watch every shot</figcaption>
+      </figure>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <h3>Record as you shoot</h3>
+        <ol>
+          <li>Turn on <strong>Record Video</strong>. You'll find it on a drill's page, at the top of Quick Start, above your drills in Jump Back In, and on the drill briefing. Allow camera and microphone access when asked.</li>
+          <li>Set your phone up facing you. The stage screen turns into a camera preview; tap the flip icon at the top right to switch cameras.</li>
+          <li>Shoot as normal. Recording starts and stops on its own with your timer, one clip per string, already synced to the beep.</li>
+          <li>When you finish the drill, tap <strong>Make Video</strong>. The app joins your stages together with title cards and your time and splits on screen.</li>
+          <li>Tap <strong>Share</strong>, then <strong>Save Video</strong> to keep it in Photos, or send it anywhere.</li>
+        </ol>
+        <div class="tip">Shooting with friends? Each shooter gets a <strong>Make Video</strong> button, and <strong>Make Joint Video — Everyone</strong> puts the whole group in one video, by stage or by shooter.</div>
+      </div>
+      <div class="card">
+        <h3>Add a video filmed elsewhere</h3>
+        <ol>
+          <li>Open the run from Results or History. Under <strong>Shot View</strong>, tap <strong>Add Video</strong>.</li>
+          <li>Pick <strong>One video for the whole run</strong> or <strong>A separate video per stage</strong>, then <strong>Choose Video</strong>.</li>
+          <li>Tap a stage. The app listens for the beep and sets it for you. Drag the in and out handles to trim.</li>
+          <li>If the beep is off, nudge it with <strong>−0.1s</strong> and <strong>+0.1s</strong>, tap <strong>Mark Beep Here</strong>, or try <strong>Detect Beep</strong> again. Then tap <strong>Confirm</strong>.</li>
+          <li>When every stage has a check mark, tap <strong>Export Video</strong>. It's saved to Photos.</li>
+        </ol>
+        <div class="tip">Each recorded clip is also saved to Photos when you confirm the stage. Clips you haven't made into a video yet can be cleared in <strong>Settings → Recorded Drill Clips</strong>.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="guide flip" id="range-day">
+    <div class="shot phone"><img src="images/range-day.jpg" alt="Saturday Range Day summary with overall standings for four shooters" width="560" height="1217" loading="lazy"></div>
     <div class="content">
       <p class="num">03</p>
-      <h2>See exactly where you gained or lost time</h2>
-      <p>Every result includes a <strong>Shot-by-Shot</strong> chart plotting each split against your personal best for that same stage — so instead of one final number, you can see precisely which shot cost you time and which one you actually did faster.</p>
-      <p>It's on the Results screen right after you finish a string, and again anytime from History.</p>
+      <h2>Plan a full Range Day</h2>
+      <p>Line up everything you want to run before you leave the house:</p>
+      <ol>
+        <li>Home → <strong>Plan Range Trip</strong>. Add a title and date, your shooters and the drills you're bringing, then tap <strong>Create</strong>.</li>
+        <li>At the range, open the trip from <strong>Upcoming &amp; In Progress</strong> on Home and tap <strong>Run Full Range Day</strong> to go through every drill in order. Or tap the play button on any one drill to run it on its own.</li>
+        <li>Each finished drill gets a green check mark, and <strong>Resume Range Day</strong> picks up with the next drill you haven't shot.</li>
+      </ol>
+      <div class="tip">With several shooters, the trip shows overall standings. Every result also counts toward that drill's own history.</div>
     </div>
-  </div>
+  </section>
 
-  <div class="guide" id="history">
-    <div class="shot phone"><img src="images/04_history_trips.jpg" alt="History tab showing personal bests and a By Trip toggle"></div>
+  <section class="guide" id="shot-by-shot">
+    <div class="shot phone"><img src="images/shot-by-shot.jpg" alt="Results screen with a Shot-by-Shot chart comparing this run to the previous best" width="560" height="1217" loading="lazy"></div>
     <div class="content">
       <p class="num">04</p>
-      <h2>Track your progress, by drill or by trip</h2>
-      <p>The History tab keeps a calendar of every day you've logged a run, a running list of <strong>Recent Personal Bests</strong>, and a toggle to switch how everything below it is grouped:</p>
-      <ul>
-        <li><strong>By Drill</strong> (default) — see run count, last run, and best hit factor for each drill you've shot.</li>
-        <li><strong>By Trip</strong> — the same runs, grouped by the Range Day they happened on.</li>
-      </ul>
-      <p>Tap into any drill for its full run history and a hit-factor trend chart over time.</p>
+      <h2>See where you gained or lost time</h2>
+      <p>Every stage on the Results screen has a <strong>Shot-by-Shot</strong> chart. It plots when each shot broke after the beep, for <strong>This Run</strong> against your <strong>Previous Best</strong> on the same stage.</p>
+      <p>Where the two lines pull apart is where you gained or lost time, so you know which shot to work on, not just the final number.</p>
+      <div class="tip">Each stage also tells you how it compares, like "Your fastest run of this stage" or how much faster you were than your average.</div>
     </div>
-  </div>
+  </section>
 
-  <div class="guide" id="drills">
-    <div class="shot phone"><img src="images/05_drills_search.jpg" alt="Drills tab filtered by a search for Qualification"></div>
+  <section class="guide flip" id="history">
+    <div class="shot phone"><img src="images/drill-history.jpg" alt="A drill's history with its summary, best time and a time-over-time chart" width="560" height="1217" loading="lazy"></div>
     <div class="content">
       <p class="num">05</p>
-      <h2>Find, favorite, and duplicate drills</h2>
-      <p>The Drills tab holds your whole library — the 21+ curated standards and qualifications the app ships with, plus anything you've built or imported.</p>
+      <h2>Track your progress</h2>
+      <p>The History tab groups every run <strong>By Drill</strong>, <strong>By Trip</strong> or <strong>By Date</strong>. Below that are an <strong>Activity</strong> calendar of the days you shot and your <strong>Recent Personal Bests</strong>.</p>
+      <p>Tap a drill to see:</p>
       <ul>
-        <li>Use the <strong>search bar</strong> to filter by name or keyword instantly.</li>
-        <li><strong>Swipe right</strong> on a drill to favorite it; <strong>swipe left</strong> to duplicate it as a starting point for a variant.</li>
-        <li>The <strong>&hellip; menu</strong> also has <strong>Browse Drill Library</strong> to add more curated drills, plus CSV import/export.</li>
+        <li><strong>Summary</strong>: times run, best and average</li>
+        <li><strong>Where To Focus</strong>: on drills with several stages, the ones costing you the most</li>
+        <li><strong>Stage By Stage</strong> results and a trend chart over time</li>
       </ul>
+      <div class="tip">To line up two runs shot by shot, open the drill's <strong>…</strong> menu and tap <strong>Compare Runs</strong>.</div>
     </div>
-  </div>
+  </section>
 
-  <div class="guide" id="home">
-    <div class="shot phone"><img src="images/06_home.jpg" alt="Home tab with Quick Start, Plan Range Trip, History, and Jump Back In"></div>
+  <section class="guide" id="drills">
+    <div class="shot phone"><img src="images/drills.jpg" alt="The Drills tab with the Live Fire and Dry Fire switch and a list of standards and qualifications" width="560" height="1217" loading="lazy"></div>
     <div class="content">
       <p class="num">06</p>
-      <h2>Jump back in from Home</h2>
-      <p>Home is built to get you shooting in one tap:</p>
+      <h2>Find, favorite and build drills</h2>
+      <p>The Drills tab holds the built-in standards, qualifications and classics, plus any drills you've built or imported. Switch between <strong>Live Fire</strong> and <strong>Dry Fire</strong> at the top.</p>
       <ul>
-        <li><strong>Quick Start</strong> — launch straight into any drill.</li>
-        <li><strong>Plan Range Trip</strong> — set up your next Range Day.</li>
-        <li><strong>History</strong> card — your most recent run and best hit factor, at a glance.</li>
-        <li><strong>Jump Back In</strong> — the drills you've run most recently, one tap from running again.</li>
+        <li>Search by name with the search bar.</li>
+        <li>Swipe right on a drill to <strong>Favorite</strong> it. Swipe left to <strong>Duplicate</strong> it as a starting point for a variant, or to <strong>Delete</strong> it.</li>
+        <li>Tap <strong>+</strong> to <strong>Create New Drill</strong>, or <strong>Browse Drill Library</strong> to add more built-in drills.</li>
+        <li>The <strong>…</strong> menu imports drills from a spreadsheet file and exports yours.</li>
       </ul>
-      <p>If a session gets interrupted — a force-quit, a phone call — Home also surfaces a <strong>Resume</strong> card so you never lose a string in progress.</p>
+      <div class="tip">Building a drill: give it a name, then tap <strong>Add Stage</strong> (or <strong>Duplicate Last Stage</strong>). Tap a stage to set its targets, distance, par time, scoring and instructions.</div>
     </div>
-  </div>
+  </section>
 
-  <p class="footnote">Something not covered here? <a href="../support/">Reach the developer directly</a> or check the <a href="../privacy/">Privacy Policy</a> for how your data is handled.</p>
+  <section class="guide flip" id="home">
+    <div class="shot phone"><img src="images/home.jpg" alt="Home screen with Quick Start, Plan Range Trip, timer status and Jump Back In with a Record Video switch" width="560" height="1217" loading="lazy"></div>
+    <div class="content">
+      <p class="num">07</p>
+      <h2>Jump back in from Home</h2>
+      <ul>
+        <li><strong>Quick Start</strong>: pick any drill, or free shoot with no drill.</li>
+        <li><strong>Plan Range Trip</strong>: set up your next Range Day.</li>
+        <li><strong>Timer status</strong>: tap it to connect your shot timer.</li>
+        <li><strong>Jump Back In</strong>: the drills you've run most recently, one tap from running again, with a <strong>Record Video</strong> switch right above them.</li>
+        <li><strong>History</strong>: your latest trend at a glance.</li>
+      </ul>
+      <div class="tip">If a run gets interrupted (a phone call, or <strong>Pause &amp; Exit</strong>), Home shows a <strong>Session In Progress</strong> card so you can pick up where you left off.</div>
+    </div>
+  </section>
+
+  <p class="footnote">Something not covered here? <a href="/support/">Visit Support</a> or <a href="/contact/">contact us</a>.</p>
 </main>
 <footer class="site-footer">
   <span>© 2026 Shot Timer Drills</span>
