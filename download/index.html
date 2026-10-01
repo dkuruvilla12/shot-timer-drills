@@ -150,60 +150,11 @@
 
   <section class="card" id="android" aria-labelledby="android-title">
     <p class="eyebrow">Android</p>
-    <h2 id="android-title">Join the Android test</h2>
-    <div id="signup">
-      <p>The Android app is in testing on Google Play. Leave the email of the Google account on your Android phone and you'll get an invite to install it.</p>
-      <form id="tester-form" action="https://formspree.io/f/xdeklybn" method="POST" novalidate>
-        <input type="hidden" name="_subject" value="Android tester request — Shot Timer Drills">
-        <input type="hidden" name="kind" value="android-tester">
-        <div class="honeypot" aria-hidden="true">
-          <label>Leave this empty <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label>
-        </div>
-
-        <label>Name
-          <input type="text" name="name" autocomplete="name" required maxlength="80">
-        </label>
-
-        <label>Google account email
-          <span class="hint">The one signed in to the Play Store on your Android phone — usually a Gmail address.</span>
-          <input type="email" name="email" autocomplete="email" inputmode="email" required maxlength="120" placeholder="you@gmail.com">
-        </label>
-
-        <label>Your shot timer <span class="hint">(optional)</span>
-          <select name="timer">
-            <option value="">Choose one</option>
-            <option>Competition Electronics ProTimer BT</option>
-            <option>AMG Commander</option>
-            <option>SG Timer / Timer 2 / GO</option>
-            <option>DAA Edge</option>
-            <option>Kestrel KST1000</option>
-            <option>Other timer</option>
-            <option>No timer yet</option>
-          </select>
-        </label>
-
-        <label>Phone model <span class="hint">(optional)</span>
-          <input type="text" name="phone" maxlength="80" placeholder="e.g. Pixel 8, Galaxy S24">
-        </label>
-
-        <p class="status" id="form-status" role="status" aria-live="polite"></p>
-        <button class="button primary" type="submit" id="submit-button">Request an invite</button>
-      </form>
-    </div>
-
-    <div id="thanks" class="done" hidden>
-      <div class="tick" aria-hidden="true">✓</div>
-      <h3>You're on the list</h3>
-      <p>You'll get an email with the test link once you've been added, usually within a day or two. Then:</p>
-      <ol class="steps" style="text-align:left; margin-top:12px;">
-        <li>Open the link on your Android phone.</li>
-        <li>Tap <strong>Become a tester</strong>.</li>
-        <li>Install Shot Timer Drills from Google Play.</li>
-      </ol>
-    </div>
+    <h2 id="android-title">Join the Android beta</h2>
+    <p>The Android app is in testing on Google Play. Request an invite with the Google account on your Android phone and you'll get a link to install it.</p>
+    <a class="button primary" href="/beta/">Sign up for the beta</a>
   </section>
 
-  <p class="form-note">Your email is used only to invite you to the Android test and to reach you about it. It isn't shared or used for marketing.</p>
 </main>
 <footer class="site-footer">
   <span>© 2026 Shot Timer Drills</span>
@@ -215,44 +166,5 @@
   </div>
 </footer>
 
-<script>
-  (function () {
-    var form = document.getElementById('tester-form');
-    var status = document.getElementById('form-status');
-    var button = document.getElementById('submit-button');
-
-    function fail(message) {
-      status.textContent = message;
-      status.className = 'status error';
-    }
-
-    form.addEventListener('submit', function (event) {
-      event.preventDefault();
-      status.textContent = '';
-      status.className = 'status';
-
-      var name = form.elements.name.value.trim();
-      var email = form.elements.email.value.trim();
-      if (!name) { fail('Please enter your name.'); form.elements.name.focus(); return; }
-      if (!form.elements.email.checkValidity() || !email) { fail('Please enter a valid email address.'); form.elements.email.focus(); return; }
-
-      button.disabled = true;
-      button.textContent = 'Sending…';
-      fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
-      }).then(function (response) {
-        if (!response.ok) throw new Error('HTTP ' + response.status);
-        document.getElementById('signup').hidden = true;
-        document.getElementById('thanks').hidden = false;
-      }).catch(function () {
-        button.disabled = false;
-        button.textContent = 'Request an invite';
-        fail('That didn’t go through. Check your connection and try again, or email support@shottimerdrills.com.');
-      });
-    });
-  })();
-</script>
 </body>
 </html>
