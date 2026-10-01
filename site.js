@@ -27,8 +27,11 @@
   var cta = document.createElement('div');
   cta.className = 'menu-cta';
   cta.innerHTML =
-    '<a class="menu-cta-link primary" href="https://apps.apple.com/us/app/shot-timer-drills/id6804109678">Get it on the App Store</a>' +
-    '<a class="menu-cta-link" href="/beta/">Join the Android beta</a>';
+    '<a class="store-badge" href="https://apps.apple.com/us/app/shot-timer-drills/id6804109678">' +
+    '<img src="/download/app-store-badge.svg" alt="Download on the App Store" width="170" height="57"></a>' +
+    '<a class="beta-badge" href="/beta/" aria-label="Join the beta on Android">' +
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M17.6 9.48l1.84-3.18a.38.38 0 0 0-.66-.38l-1.86 3.22a11.5 11.5 0 0 0-9.84 0L5.22 5.92a.38.38 0 0 0-.66.38L6.4 9.48A10.78 10.78 0 0 0 1 18h22a10.78 10.78 0 0 0-5.4-8.52zM7 15.25A1.25 1.25 0 1 1 8.25 14 1.25 1.25 0 0 1 7 15.25zm10 0A1.25 1.25 0 1 1 18.25 14 1.25 1.25 0 0 1 17 15.25z"/></svg>' +
+    '<span><span class="small">Join the beta on</span><span class="big">Android</span></span></a>';
   drawer.appendChild(cta);
 
   var backdrop = document.createElement('div');
