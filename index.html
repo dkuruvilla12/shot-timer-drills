@@ -2,162 +2,355 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Privacy Policy — Shot Timer Drills</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>
+  // Old links (and app versions already installed) point at the GitHub Pages
+  // address, whose root used to be the privacy policy. Send them here.
+  if (location.hostname === 'dkuruvilla12.github.io') {
+    var p = location.pathname.replace(/^\/shot-timer-drills/, '') || '/';
+    if (p === '/' || p === '/index.html') p = '/privacy/';
+    location.replace('https://shottimerdrills.com' + p + location.hash);
+  }
+</script>
+<title>Shot Timer Drills — Drills, splits and progress with your Bluetooth shot timer</title>
+<meta name="description" content="Run shooting drills with your Bluetooth shot timer. Shot Timer Drills catches every split, scores the stage, records video with your times on it, and tracks your personal bests.">
+<link rel="canonical" href="https://shottimerdrills.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Shot Timer Drills">
+<meta property="og:description" content="Drills, splits and personal bests with your Bluetooth shot timer. On iPhone now, Android testers wanted.">
+<meta property="og:url" content="https://shottimerdrills.com/">
+<meta property="og:image" content="https://shottimerdrills.com/download/share.jpg">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="500">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="apple-itunes-app" content="app-id=6804109678">
+<meta name="theme-color" content="#0e0e10">
+<link rel="icon" href="download/icon.png">
+<link rel="apple-touch-icon" href="download/icon.png">
 <style>
   :root {
-    color-scheme: light dark;
-    --bg: #f9f9fb;
-    --card: #ffffff;
-    --text: #1c1c1e;
-    --muted: #6b6b70;
+    color-scheme: dark;
+    --bg: #0e0e10;
+    --card: #1c1c1e;
+    --text: #f2f2f7;
+    --muted: #a1a1a6;
     --accent: #ff8c00;
-    --border: #e5e5ea;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #0e0e10;
-      --card: #1c1c1e;
-      --text: #f2f2f7;
-      --muted: #a1a1a6;
-      --border: #2c2c2e;
-    }
+    --border: #2c2c2e;
   }
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: var(--bg);
+    background: radial-gradient(120% 50% at 50% 0%, #2a1c0c 0%, var(--bg) 70%) no-repeat, var(--bg);
     color: var(--text);
-    line-height: 1.6;
+    line-height: 1.55;
+    -webkit-text-size-adjust: 100%;
   }
-  .wrap {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 48px 20px 80px;
+  a { color: var(--accent); text-decoration: none; }
+  img { max-width: 100%; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+
+  /* Nav */
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: max(18px, env(safe-area-inset-top)) 0 18px;
   }
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 36px;
-  }
-  h1 {
-    font-size: 1.75rem;
-    margin: 0 0 4px;
+  .brand { display: flex; align-items: center; gap: 10px; color: var(--text); font-weight: 700; }
+  .brand img { width: 34px; height: 34px; border-radius: 8px; }
+  .nav-links { display: flex; gap: 22px; font-size: 0.95rem; }
+  .nav-links a { color: var(--muted); }
+  .nav-links a:hover { color: var(--text); }
+
+  /* Hero */
+  .hero {
+    display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center;
+    padding: 40px 0 72px;
   }
   .eyebrow {
-    color: var(--accent);
-    font-weight: 600;
-    font-size: 0.8rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin: 0 0 8px;
+    color: var(--accent); font-weight: 700; font-size: 0.78rem;
+    letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 10px;
   }
-  .effective {
-    color: var(--muted);
-    font-size: 0.9rem;
-    margin: 0 0 32px;
+  h1 { font-size: clamp(2.3rem, 5.5vw, 3.6rem); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 18px; }
+  h1 em { font-style: normal; color: var(--accent); }
+  .lede { color: var(--muted); font-size: 1.15rem; margin: 0 0 28px; max-width: 34ch; }
+  .ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+  .store-badge { display: inline-block; line-height: 0; border-radius: 12px; }
+  .store-badge img { width: 170px; height: auto; display: block; }
+  .button {
+    display: inline-flex; align-items: center; gap: 8px;
+    height: 57px; padding: 0 22px; border-radius: 12px;
+    font-weight: 700; font-size: 1rem;
+    border: 1px solid var(--border); background: var(--card); color: var(--text);
   }
-  h2 {
-    font-size: 1.1rem;
-    margin: 32px 0 8px;
+  .button:hover { border-color: var(--accent); }
+  .button.primary { background: var(--accent); border-color: var(--accent); color: #111; }
+  .cta-note { color: var(--muted); font-size: 0.85rem; margin: 14px 0 0; }
+
+  .phones { position: relative; display: flex; justify-content: center; min-height: 520px; }
+  .phone {
+    width: 250px; border-radius: 34px; overflow: hidden;
+    border: 6px solid #2a2a2d; background: #000;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.04);
   }
-  p, li { color: var(--text); }
-  strong { color: var(--text); }
-  a { color: var(--accent); }
-  .contact {
-    margin-top: 40px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
-    color: var(--muted);
-    font-size: 0.95rem;
+  .phone img { display: block; width: 100%; height: auto; }
+  .phones .phone:first-child { position: relative; z-index: 2; transform: translateX(-60px) rotate(-3deg); }
+  .phones .phone:last-child { position: absolute; top: 46px; transform: translateX(80px) rotate(4deg); opacity: 0.9; }
+
+  /* Timers strip */
+  .timers {
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    padding: 28px 0; text-align: center;
+  }
+  .timers p { margin: 0 0 14px; color: var(--muted); font-size: 0.9rem; }
+  .timers ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+  .timers li {
+    padding: 8px 14px; border-radius: 999px; background: var(--card);
+    border: 1px solid var(--border); font-size: 0.9rem; font-weight: 600;
+  }
+
+  /* Features */
+  .features { padding: 80px 0 20px; }
+  .section-head { text-align: center; max-width: 640px; margin: 0 auto 56px; }
+  h2 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); line-height: 1.15; letter-spacing: -0.015em; margin: 0 0 12px; }
+  .section-head p { color: var(--muted); font-size: 1.05rem; margin: 0; }
+  .feature {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+    padding: 36px 0;
+  }
+  .feature:nth-of-type(even) .feature-shot { order: -1; }
+  .feature-shot { display: flex; justify-content: center; }
+  .feature-shot .phone { width: 270px; }
+  h3 { font-size: 1.6rem; line-height: 1.2; margin: 0 0 12px; letter-spacing: -0.01em; }
+  .feature p { color: var(--muted); margin: 0 0 14px; font-size: 1.05rem; }
+  .feature ul { margin: 0; padding: 0; list-style: none; }
+  .feature li { position: relative; padding-left: 22px; margin: 8px 0; }
+  .feature li::before {
+    content: ""; position: absolute; left: 0; top: 0.6em;
+    width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
+  }
+
+  /* Extras grid */
+  .extras { padding: 60px 0 40px; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 18px;
+    padding: 24px 22px;
+  }
+  .card h4 { margin: 0 0 8px; font-size: 1.08rem; }
+  .card p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+
+  /* Get it */
+  .get { padding: 60px 0 80px; }
+  .get-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .get .card { padding: 32px 28px; display: flex; flex-direction: column; align-items: flex-start; }
+  .get .card h3 { margin-bottom: 8px; }
+  .get .card p { margin-bottom: 22px; flex: 1; }
+  .get .card img.icon { width: 64px; height: 64px; border-radius: 15px; margin-bottom: 18px; }
+
+  footer {
+    border-top: 1px solid var(--border); padding: 28px 0 max(36px, env(safe-area-inset-bottom));
+    color: var(--muted); font-size: 0.88rem;
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px;
+  }
+  footer .links { display: flex; flex-wrap: wrap; gap: 18px; }
+  footer .links a { color: var(--muted); }
+  footer .links a:hover { color: var(--text); }
+
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; text-align: center; padding-top: 24px; gap: 40px; }
+    .lede { margin-left: auto; margin-right: auto; }
+    .ctas { justify-content: center; }
+    .phones { min-height: 0; }
+    .phones .phone:first-child { transform: translateX(-40px) rotate(-3deg); width: 210px; }
+    .phones .phone:last-child { transform: translateX(60px) rotate(4deg); width: 200px; top: 36px; }
+    .feature { grid-template-columns: 1fr; gap: 28px; text-align: left; padding: 28px 0; }
+    .feature .feature-shot, .feature:nth-of-type(even) .feature-shot { order: 0; }
+    .feature-shot .phone { width: 240px; }
+    .grid { grid-template-columns: 1fr 1fr; }
+    .get-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 520px) {
+    .nav-links { gap: 16px; font-size: 0.9rem; }
+    .nav-links .hide-sm { display: none; }
+    .grid { grid-template-columns: 1fr; }
+    .phones .phone:first-child { width: 190px; transform: translateX(-34px) rotate(-3deg); }
+    .phones .phone:last-child { width: 175px; transform: translateX(52px) rotate(4deg); }
+    .button { height: 54px; }
   }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="card">
-    <p class="eyebrow">Shot Timer Drills</p>
-    <h1>Privacy Policy</h1>
-    <p class="effective">Effective date: September 26, 2026</p>
+  <nav>
+    <a class="brand" href="./"><img src="download/icon.png" alt="" width="34" height="34">Shot Timer Drills</a>
+    <div class="nav-links">
+      <a class="hide-sm" href="#features">Features</a>
+      <a href="guides/">Guides</a>
+      <a href="support/">Support</a>
+    </div>
+  </nav>
 
-    <p>Shot Timer Drills ("the app") is available for iPhone (with an Apple Watch companion) and for Android. It is built to keep your training data on your own devices. This policy explains, plainly, what the app stores, what little it sends, and where. Where the iPhone and Android versions differ, it says so.</p>
-
-    <h2>Summary</h2>
-    <p><strong>There are no accounts, no advertising, no analytics, and no tracking.</strong> Everything you enter — drills, session history, shot times, shooter names, personal bests, gear, notes and videos — stays on your device. On iPhone it can also sync to your own private iCloud account; on Android it can be included in your phone's own Google backup. The developer never receives it and has no server it could be sent to.</p>
-    <p><strong>The one thing the app sends to the developer is a timer diagnostic report</strong>, described under <a href="#timer-reports">Timer reports</a>. These reports describe how a Bluetooth shot timer behaved. They never contain shooter names, drill names, notes, or scores. Automatic reports can be turned off at any time in Settings.</p>
-    <p>On iPhone, the optional Buddy Sync feature shares data with one person you personally invite — never with the developer.</p>
-
-    <h2>What data the app stores, and where</h2>
-    <p>The app stores the following on your device:</p>
-    <ul>
-      <li>Drills you create or add from the built-in library, and their stages</li>
-      <li>Session and stage results (times, hits, scores, individual shot times) from drills you run</li>
-      <li>Shooter names you add, and the gear (gun and carry style names) you tag</li>
-      <li>Personal best records, range trips, and notes you enter</li>
-      <li>Video clips you record with Record Video, and videos you export</li>
-      <li>Your settings, and a short on-device log of how your shot timer behaved (see <a href="#timer-reports">Timer reports</a>)</li>
-    </ul>
-    <p><strong>On iPhone</strong>, this is stored with Apple's SwiftData framework. If iCloud is available and signed in, it also syncs to your own private CloudKit database — the same private, per-user storage Apple provides to any app for iCloud sync — so it carries over to your other devices signed into the same iCloud account. That database is <strong>yours</strong>: Apple's private CloudKit containers are only ever readable by the account they belong to. The developer has no access to it and no way to retrieve, view, or restore your data from it. If you're signed out of iCloud, or have it turned off, the app works exactly the same way using on-device storage only.</p>
-    <p><strong>On Android</strong>, this is stored in the app's private storage on your phone. If you have Android's backup turned on, your drills, history, shooters and settings are included in your phone's own backup to your Google account, so they can come back when you set up a new phone. That backup is handled by Android and Google under your account; the developer cannot see or access it. Recorded video clips and the timer log are left out of the backup.</p>
-
-    <h2>Buddy Sync (iPhone only)</h2>
-    <p>Buddy Sync is an optional feature, off by default, that lets two people keep their drills and history in sync with each other. Turning it on for a shooter (from that shooter's profile) sends an invite link — over Messages, AirDrop, or however you choose to send it — to one specific person you pick. Nothing is shared until you send that link and the other person accepts it.</p>
-    <p>Once accepted, it works through Apple's CloudKit sharing, using a private, shared record zone between just the two of you — the same technology Apple provides for sharing a photo album or a note, applied here to drill and range-trip data instead. Drills and equipment (gun/carry style names) sync both ways automatically. A shooter's range trips, sessions, and personal bests only sync if that shooter's own "include this shooter's history" switch is turned on — so enabling Buddy Sync for one shooter never exposes another shooter's history on the same device without a separate, explicit choice.</p>
-    <p>As with private iCloud sync, this data is never sent to the developer or to any server we operate — it travels only between your device and your buddy's device, through Apple's CloudKit infrastructure, under the two of you as the participants. You can turn off syncing for a pairing at any time from that shooter's Buddy Sync screen; data already synced stays on both devices, but nothing new is exchanged afterward.</p>
-
-    <h2>Bluetooth</h2>
-    <p>The app can connect over Bluetooth Low Energy to a supported shot timer (Competition Electronics ProTimer BT, AMG Commander, SG Timer, DAA Edge, or Kestrel KST1000), if you choose to pair one, in order to read shot times during a drill. This connection is local, device-to-device — shot-timer data is not sent anywhere beyond your phone and the timer itself, except for the timer reports described below.</p>
-    <p><strong>On Android 8 through 11</strong>, Android requires the location permission for any app to scan for Bluetooth devices. The app asks for it only for that reason; it never reads or stores your location. On Android 12 and later, the app uses the Bluetooth permissions instead and does not ask for location.</p>
-    <p><strong>On Android</strong>, while a timer is connected or a timed string is in progress, the app keeps running in the background so shot times, auto-stop and reconnecting keep working with the screen locked. Android shows an ongoing "Timer connected" notification while this is happening. Nothing is sent anywhere because of it; it stops when you disconnect the timer.</p>
-
-    <h2>Camera, microphone, and your photo gallery</h2>
-    <p>If you turn on Record Video, the app uses your camera and microphone to film each string, so you can review it and make a video with your shot times overlaid. The app asks for camera and microphone access the first time you turn it on, and only records while you're running a drill with Record Video on. Clips are stored on your device. Clips for stages you confirm, and videos and result images you choose to save, are added to your photo gallery (Photos on iPhone; Movies and Pictures on Android). The app never uploads your videos or images anywhere; they only leave your device if you share them yourself.</p>
-
-    <h2>Apple Watch (iPhone only)</h2>
-    <p>The Apple Watch companion mirrors the drill open on your iPhone and lets you start and score strings from your wrist. The iPhone and watch exchange only what's needed for that — the drill and stage names, round counts, stage instructions, and the hits you enter — directly between your own devices through Apple's WatchConnectivity. None of it is sent to the developer.</p>
-
-    <h2>Exporting and sharing your data</h2>
-    <p>You can export your data at any time: a complete backup of everything (Settings → Export All Data), a single shooter's data, or spreadsheet-friendly CSV files of drills or history. You can also share result images and videos. These files go wherever you choose — Files, iCloud Drive, Google Drive, AirDrop, Quick Share, email, messaging apps — and that transfer is entirely under your control, not something the app does on its own.</p>
-
-    <h2>Feedback</h2>
-    <p>If you use Send Feedback in Settings, the app opens your own email app with a message addressed to the developer, including the name and note you type. Whatever you write is sent the same way as any email you send, only if you choose to send it. The app itself does not collect or store it.</p>
-
-    <h2 id="timer-reports">Timer reports</h2>
-    <p>The app keeps a short log on your device of how your Bluetooth shot timer behaved: the timer's advertised name, its firmware version if it reports one, connection attempts and errors, the raw messages exchanged with the timer, and a tally of how each string went. This log stays on your device unless it's included in a report as described here.</p>
-    <p><strong>What a report contains.</strong> The timer's brand and model; its firmware version and settings if it reports them; whether connecting worked and any errors; for each string, how many shots the timer sent compared with how many the stage expected, the shot times and splits, and how the string ended; disconnect counts; raw data exchanged with the timer; timestamps; the app version; the platform and its version (iOS, or Android and your phone's model); and a random identifier created on your phone when the app first needs one. That identifier is not your device's identifier or advertising ID, and it isn't linked to your name, account, or email — it only lets the developer tell reports from different phones apart. <strong>Reports never include shooter names, drill names, notes, or scores.</strong> A timer's custom name is replaced with "custom name"; only a standard name prefix such as "PT Link" is kept.</p>
-    <p><strong>Automatic reports.</strong> These are on by default, and you can turn them off at any time (iPhone: Settings → Timer Diagnostics; Android: Settings → Share Timer Diagnostics). Before the first automatic report, the app shows a one-time notice where you can turn them off.</p>
-    <ul>
-      <li><strong>On iPhone</strong>, automatic reports are sent only for timers the app hasn't yet been tested with: when such a timer first connects (or fails to connect), and again after your first three strings with it.</li>
-      <li><strong>On Android</strong>, an automatic report is sent the first time each brand of timer connects on your phone — for every brand, including ones already tested on iPhone — and one more after three strings with that brand, so the developer can confirm each timer works on Android. Each brand reports at most these two times per install. On Android, nothing is sent until you've answered the one-time notice, and turning reports off also deletes any that are still waiting to be sent.</li>
-    </ul>
-    <p>If your phone is offline, a report is kept on your phone and sent later.</p>
-    <p><strong>Reports you choose to send.</strong> If you use Send Timer Report in Timer Setup, or answer the "Did your timer work?" check, the app sends a report when you tap the button. You can add a note and an email address if you'd like a reply; both are optional, and the email is used only to reply to you. If sending isn't possible, the app offers to send the report by email instead.</p>
-    <p><strong>Where reports go.</strong> Reports are sent over an encrypted (HTTPS) connection to <a href="https://formspree.io">Formspree</a>, a form-handling service that forwards them to the developer's email. Like any web service, Formspree receives your device's IP address when a report is sent; the app doesn't use it, and it isn't included in the report the developer reads. Reports are used only to find and fix problems with shot timers, and are kept only as long as they're useful for that. To have reports from your phone deleted, email the developer (below) with the approximate date, your timer brand, and your phone model, or the reply email you used.</p>
-
-    <h2>Analytics, advertising, and third parties</h2>
-    <p>The app contains no analytics, no advertising, no tracking, and no crash-reporting services, and it never sells or shares your data. Its only network activity is:</p>
-    <ul>
-      <li>timer reports, sent to Formspree as described above;</li>
-      <li>on iPhone, your device syncing through Apple's CloudKit — with your own private iCloud account, and with a Buddy Sync pairing only if you've turned that on and invited someone;</li>
-      <li>on Android, Android's own backup to your Google account if you have it turned on.</li>
-    </ul>
-    <p>The app is built with standard platform libraries (Apple's and Google's, plus open-source Bluetooth and media libraries on Android) that run on your device and don't send your data anywhere.</p>
-
-    <h2>Children's privacy</h2>
-    <p>The app is a firearms training tool intended for adults. It does not knowingly collect personal information from anyone under 18, and the only data it sends — timer reports — contains no names or other personal information unless someone chooses to type an email address into a report.</p>
-
-    <h2>Deleting your data</h2>
-    <p><strong>On iPhone</strong>, deleting the app removes its data from your device. If you have iCloud sync turned on, your data also remains in your own private iCloud account and will come back automatically the next time you (or another of your devices) install the app while signed into that same iCloud account — this is standard behavior for any app that uses iCloud, and is entirely between you and Apple. To remove your data from iCloud as well, delete it from within the app (or turn off iCloud sync for the app in your device's Settings) before deleting the app itself.</p>
-    <p><strong>On Android</strong>, uninstalling the app, or clearing its storage in your phone's Settings, removes its data from your phone. A copy may remain in your Google account's backup until Android replaces or removes it; you can manage backups in your Google account and phone settings.</p>
-    <p>If you'd like to keep a copy of everything, use Export All Data in Settings first. To have timer reports deleted, see <a href="#timer-reports">Timer reports</a>.</p>
-
-    <h2>Changes to this policy</h2>
-    <p>If this policy ever changes — for example, if a future version of the app adds a feature that sends data — this page will be updated and the effective date above will change accordingly.</p>
-
-    <p class="contact">Questions about this policy or the app, or requests to delete timer reports, can be sent to <a href="mailto:dskuruvilla@pm.me">dskuruvilla@pm.me</a>.</p>
-  </div>
+  <header class="hero">
+    <div>
+      <p class="eyebrow">For your Bluetooth shot timer</p>
+      <h1>Every drill. Every split. <em>Every run.</em></h1>
+      <p class="lede">Pick a drill, connect your shot timer and shoot. The app catches every shot, scores the stage and tracks your personal bests. You can also record the string with your times on the video.</p>
+      <div class="ctas">
+        <a class="store-badge" href="https://apps.apple.com/us/app/shot-timer-drills/id6804109678">
+          <img src="download/app-store-badge.svg" alt="Download on the App Store" width="170" height="57">
+        </a>
+        <a class="button" href="download/#android">Join the Android beta</a>
+      </div>
+      <p class="cta-note">No account, no ads, no tracking.</p>
+    </div>
+    <div class="phones" aria-hidden="true">
+      <div class="phone"><img src="images/video.jpg" alt="" width="560" height="1220"></div>
+      <div class="phone"><img src="images/scoring.jpg" alt="" width="560" height="1220"></div>
+    </div>
+  </header>
 </div>
+
+<section class="timers" aria-label="Supported shot timers">
+  <div class="wrap">
+    <p>Works with the Bluetooth shot timers you already own</p>
+    <ul>
+      <li>Competition Electronics ProTimer BT</li>
+      <li>AMG Commander</li>
+      <li>SG Timer, Timer 2 &amp; GO</li>
+      <li>Double Alpha Academy Edge</li>
+      <li>Kestrel KST1000</li>
+    </ul>
+  </div>
+</section>
+
+<main class="wrap">
+  <section class="features" id="features">
+    <div class="section-head">
+      <p class="eyebrow">What it does</p>
+      <h2>Practice you can measure</h2>
+      <p>Your shot timer gives you one number. Shot Timer Drills turns every string into splits, scores and trends, so you know what to work on next.</p>
+    </div>
+
+    <article class="feature">
+      <div>
+        <p class="eyebrow">Live from your timer</p>
+        <h3>Score strings in seconds</h3>
+        <p>Tap Shooter Ready. The app arms your timer, catches each shot as it happens and stops at the stage's round count.</p>
+        <ul>
+          <li>Time and every split appear automatically, so you don't type anything in</li>
+          <li>Hit factor, time plus and points scoring, with USPSA/IPSC, IDPA and custom zones</li>
+          <li>Steel hit/miss, penalties, par times and pass/fail</li>
+        </ul>
+      </div>
+      <div class="feature-shot"><div class="phone"><img src="images/scoring.jpg" alt="Scoring a Bill Drill string: 2.993 seconds with six splits and hit counters" width="560" height="1220" loading="lazy"></div></div>
+    </article>
+
+    <article class="feature">
+      <div>
+        <p class="eyebrow">Video</p>
+        <h3>Record every run</h3>
+        <p>Film each string with your phone. The video syncs to your timer's start beep and burns your time and splits onto the footage.</p>
+        <ul>
+          <li>Start beep detected automatically</li>
+          <li>See exactly which shot was slow</li>
+          <li>Share the video or a result card with anyone</li>
+        </ul>
+      </div>
+      <div class="feature-shot"><div class="phone"><img src="images/video.jpg" alt="Recorded video of a shooter with total time and splits overlaid" width="560" height="1220" loading="lazy"></div></div>
+    </article>
+
+    <article class="feature">
+      <div>
+        <p class="eyebrow">Progress</p>
+        <h3>See yourself improve</h3>
+        <p>Every drill keeps its own history, so you can track your times and personal bests over weeks of practice.</p>
+        <ul>
+          <li>Personal bests for every drill and stage</li>
+          <li>Trend charts and "where to focus" insights</li>
+          <li>Compare any two runs, shot by shot</li>
+        </ul>
+      </div>
+      <div class="feature-shot"><div class="phone"><img src="images/progress.jpg" alt="Drill summary with best time, average time and a time-over-time chart" width="560" height="1220" loading="lazy"></div></div>
+    </article>
+
+    <article class="feature">
+      <div>
+        <p class="eyebrow">Drill library</p>
+        <h3>30 drills built in. Build your own.</h3>
+        <p>Classics, standards and qualifications, from the Bill Drill and El Presidente to the FAST drill and the FBI qualification.</p>
+        <ul>
+          <li>Each stage lists its rounds, distance, targets and par time</li>
+          <li>Build drills on one page, or import them from a spreadsheet</li>
+          <li>Live fire and dry fire, with par beeps from your phone</li>
+        </ul>
+      </div>
+      <div class="feature-shot"><div class="phone"><img src="images/library.jpg" alt="Drill library listing standards and qualifications" width="560" height="1220" loading="lazy"></div></div>
+    </article>
+  </section>
+
+  <section class="extras" aria-labelledby="extras-title">
+    <div class="section-head">
+      <h2 id="extras-title">Built for range days</h2>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <h4>Plan range trips</h4>
+        <p>Line up the drills you're bringing, then run them in order. Resume picks up where you left off.</p>
+      </div>
+      <div class="card">
+        <h4>Shoot with friends</h4>
+        <p>Add shooters and run the full drill each or rotate stage by stage. Then check the standings.</p>
+      </div>
+      <div class="card">
+        <h4>Score from your wrist</h4>
+        <p>Count hits and misses on Apple Watch after the string, without reaching for your phone.</p>
+      </div>
+      <div class="card">
+        <h4>Phone in your pocket</h4>
+        <p>The timer connection stays alive with the screen locked, so you can put the phone away and shoot.</p>
+      </div>
+      <div class="card">
+        <h4>Jump back in</h4>
+        <p>Your recent drills are one tap from running again, and you can record video while you're at it.</p>
+      </div>
+      <div class="card">
+        <h4>Your data stays yours</h4>
+        <p>No account, no ads, no tracking. Your history stays on your phone, and you can export it anytime.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="get" id="get" aria-labelledby="get-title">
+    <div class="section-head">
+      <h2 id="get-title">Get Shot Timer Drills</h2>
+    </div>
+    <div class="get-grid">
+      <div class="card">
+        <p class="eyebrow">iPhone &amp; Apple Watch</p>
+        <h3>Download on the App Store</h3>
+        <p>Available now for iPhone, with an Apple Watch app for scoring from your wrist.</p>
+        <a class="store-badge" href="https://apps.apple.com/us/app/shot-timer-drills/id6804109678">
+          <img src="download/app-store-badge.svg" alt="Download on the App Store" width="170" height="57">
+        </a>
+      </div>
+      <div class="card">
+        <p class="eyebrow">Android</p>
+        <h3>Join the Android beta</h3>
+        <p>The Android app is in testing on Google Play. Leave your Google account email and you'll get an invite to install it.</p>
+        <a class="button primary" href="download/#android">Sign up for the beta</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Shot Timer Drills</span>
+    <div class="links">
+      <a href="guides/">How-To Guides</a>
+      <a href="support/">Support</a>
+      <a href="privacy/">Privacy Policy</a>
+    </div>
+  </footer>
+</main>
 </body>
 </html>
