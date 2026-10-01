@@ -27,6 +27,7 @@
 <meta name="theme-color" content="#0e0e10">
 <link rel="icon" href="download/icon.png">
 <link rel="apple-touch-icon" href="download/icon.png">
+<link rel="stylesheet" href="/site.css">
 <style>
   :root {
     color-scheme: dark;
@@ -50,17 +51,6 @@
   a { color: var(--accent); text-decoration: none; }
   img { max-width: 100%; }
   .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
-
-  /* Nav */
-  nav {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: max(18px, env(safe-area-inset-top)) 0 18px;
-  }
-  .brand { display: flex; align-items: center; gap: 10px; color: var(--text); font-weight: 700; }
-  .brand img { width: 34px; height: 34px; border-radius: 8px; }
-  .nav-links { display: flex; gap: 22px; font-size: 0.95rem; }
-  .nav-links a { color: var(--muted); }
-  .nav-links a:hover { color: var(--text); }
 
   /* Hero */
   .hero {
@@ -171,8 +161,6 @@
     .get-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 520px) {
-    .nav-links { gap: 16px; font-size: 0.9rem; }
-    .nav-links .hide-sm { display: none; }
     .grid { grid-template-columns: 1fr; }
     .phones .phone:first-child { width: 190px; transform: translateX(-34px) rotate(-3deg); }
     .phones .phone:last-child { width: 175px; transform: translateX(52px) rotate(4deg); }
@@ -181,16 +169,16 @@
 </style>
 </head>
 <body>
+<nav class="site-nav" aria-label="Site">
+  <a class="brand" href="/"><img src="/download/icon.png" alt="" width="32" height="32">Shot Timer Drills</a>
+  <ul>
+    <li><a href="/guides/">Guides</a></li>
+    <li><a href="/support/">Support</a></li>
+    <li><a href="/contact/">Contact</a></li>
+    <li><a href="/privacy/">Privacy</a></li>
+  </ul>
+</nav>
 <div class="wrap">
-  <nav>
-    <a class="brand" href="./"><img src="download/icon.png" alt="" width="34" height="34">Shot Timer Drills</a>
-    <div class="nav-links">
-      <a class="hide-sm" href="#features">Features</a>
-      <a href="guides/">Guides</a>
-      <a href="support/">Support</a>
-    </div>
-  </nav>
-
   <header class="hero">
     <div>
       <p class="eyebrow">For your Bluetooth shot timer</p>

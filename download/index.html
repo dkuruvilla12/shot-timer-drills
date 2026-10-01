@@ -17,6 +17,7 @@
 <meta name="theme-color" content="#0e0e10">
 <link rel="icon" href="icon.png">
 <link rel="apple-touch-icon" href="icon.png">
+<link rel="stylesheet" href="/site.css">
 <style>
   :root {
     color-scheme: dark;
@@ -42,7 +43,7 @@
   .wrap {
     max-width: 480px;
     margin: 0 auto;
-    padding: max(32px, env(safe-area-inset-top)) 16px max(48px, env(safe-area-inset-bottom));
+    padding: 16px 16px max(48px, env(safe-area-inset-bottom));
   }
   header { text-align: center; margin-bottom: 28px; }
   header img { width: 96px; height: 96px; border-radius: 22px; box-shadow: 0 8px 30px rgba(255, 140, 0, 0.18); }
@@ -122,6 +123,15 @@
 </style>
 </head>
 <body>
+<nav class="site-nav" aria-label="Site">
+  <a class="brand" href="/"><img src="/download/icon.png" alt="" width="32" height="32">Shot Timer Drills</a>
+  <ul>
+    <li><a href="/guides/">Guides</a></li>
+    <li><a href="/support/">Support</a></li>
+    <li><a href="/contact/">Contact</a></li>
+    <li><a href="/privacy/">Privacy</a></li>
+  </ul>
+</nav>
 <main class="wrap">
   <header>
     <img src="icon.png" alt="Shot Timer Drills app icon" width="96" height="96">
@@ -233,7 +243,7 @@
       }).catch(function () {
         button.disabled = false;
         button.textContent = 'Request an invite';
-        fail('That didn’t go through. Check your connection and try again, or email dskuruvilla@pm.me.');
+        fail('That didn’t go through. Check your connection and try again, or email support@shottimerdrills.com.');
       });
     });
   })();

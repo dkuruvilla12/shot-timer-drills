@@ -1,0 +1,40 @@
+/* Shared site menu. Each page defines --text, --muted, --accent and --border. */
+.site-nav {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: max(16px, env(safe-area-inset-top)) 20px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  flex-wrap: wrap;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.3;
+}
+.site-nav .brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+}
+.site-nav .brand img { width: 32px; height: 32px; border-radius: 8px; }
+.site-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 22px;
+  font-size: 0.95rem;
+}
+.site-nav ul a { color: var(--muted); text-decoration: none; }
+.site-nav ul a:hover { color: var(--text); text-decoration: none; }
+.site-nav ul a[aria-current="page"] { color: var(--accent); font-weight: 600; }
+
+@media (max-width: 560px) {
+  .site-nav { justify-content: center; }
+  .site-nav ul { width: 100%; justify-content: center; gap: 4px 20px; }
+}
