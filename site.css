@@ -165,3 +165,62 @@ img { max-width: 100%; }
   .site-footer { justify-content: center; text-align: center; }
   .site-footer .links { justify-content: center; }
 }
+
+/* Pop-out menu from the right (built by site.js) */
+.menu-button, .menu-close {
+  display: grid; place-items: center;
+  width: 44px; height: 44px; padding: 0;
+  border-radius: 12px; border: 1px solid var(--border);
+  background: var(--card); color: var(--text); cursor: pointer;
+}
+.menu-button:hover, .menu-close:hover { border-color: var(--accent); }
+.menu-button svg, .menu-close svg {
+  width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round;
+}
+.js-menu .site-nav { justify-content: space-between; }
+.menu-backdrop {
+  position: fixed; inset: 0; z-index: 50;
+  background: rgba(0, 0, 0, 0.55);
+  opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
+}
+.menu-drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 51;
+  width: min(320px, 86vw);
+  display: flex; flex-direction: column; gap: 8px;
+  padding: max(16px, env(safe-area-inset-top)) 20px max(24px, env(safe-area-inset-bottom));
+  background: #141416; border-left: 1px solid var(--border);
+  box-shadow: -20px 0 60px rgba(0, 0, 0, 0.5);
+  transform: translateX(100%); transition: transform 0.28s ease;
+  overflow-y: auto;
+}
+.menu-open { overflow: hidden; }
+.menu-open .menu-backdrop { opacity: 1; pointer-events: auto; }
+.menu-open .menu-drawer { transform: none; }
+.menu-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 12px; margin-bottom: 4px; border-bottom: 1px solid var(--border);
+}
+.menu-head span {
+  color: var(--muted); font-weight: 700; font-size: 0.78rem;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.menu-drawer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.menu-drawer ul a {
+  display: block; padding: 14px 12px; border-radius: 12px;
+  color: var(--text); font-size: 1.15rem; font-weight: 600;
+}
+.menu-drawer ul a:hover { background: var(--card); text-decoration: none; }
+.menu-drawer ul a[aria-current="page"] { color: var(--accent); background: rgba(255, 140, 0, 0.1); }
+.menu-cta { margin-top: auto; display: grid; gap: 10px; padding-top: 20px; }
+.menu-cta-link {
+  display: block; text-align: center; padding: 14px 16px; border-radius: 12px;
+  font-weight: 700; color: var(--text); background: var(--card); border: 1px solid var(--border);
+}
+.menu-cta-link:hover { text-decoration: none; border-color: var(--accent); }
+.menu-cta-link.primary { background: var(--accent); border-color: var(--accent); color: #111; }
+@media (max-width: 560px) {
+  .js-menu .site-nav { justify-content: space-between; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .menu-drawer, .menu-backdrop { transition: none; }
+}
