@@ -76,6 +76,15 @@
   .done h2 { margin: 14px 0 6px; }
   .done p { color: var(--muted); margin: 0; }
   [hidden] { display: none !important; }
+  .qr-card {
+    display: flex; align-items: center; gap: 22px;
+    max-width: 640px; margin: 0 auto 24px; padding: 18px 24px;
+  }
+  .qr-card img { width: 128px; height: 128px; flex: 0 0 auto; background: #fff; padding: 8px; border-radius: 12px; image-rendering: pixelated; }
+  .qr-card h2 { font-size: 1.1rem; margin: 0 0 6px; }
+  .qr-card p { margin: 0; color: var(--muted); font-size: 0.92rem; }
+  /* Only for computers: on a phone or tablet the steps below already work. */
+  @media (max-width: 760px), (hover: none) { .qr-card { display: none; } }
   .iphone-note { text-align: center; color: var(--muted); font-size: 0.92rem; margin: 32px 0 0; }
 
   @media (max-width: 760px) {
@@ -98,6 +107,14 @@
     <h1>Join the Android beta</h1>
     <p class="lede">Shot Timer Drills for Android is in testing on Google Play. Join in three taps from your Android phone, using the Google account you use for the Play Store.</p>
   </header>
+
+  <section class="card qr-card" aria-labelledby="qr-title">
+    <img src="qr.svg" alt="QR code that opens shottimerdrills.com/beta on your phone" width="128" height="128">
+    <div>
+      <h2 id="qr-title">On a computer? Scan this with your Android phone.</h2>
+      <p>Point your phone's camera at the code to open this page there, then follow the three steps. Or go to <strong>shottimerdrills.com/beta</strong> on your phone.</p>
+    </div>
+  </section>
 
   <div class="beta-layout">
     <section class="card steps-card" aria-labelledby="how-title">
