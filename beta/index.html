@@ -20,7 +20,8 @@
 <link rel="stylesheet" href="/site.css?v=4">
 <style>
   :root { --field: #111113; --error: #ff6961; --ok: #34c759; }
-  .beta-layout { display: grid; grid-template-columns: 1fr 1.15fr; gap: 24px; align-items: start; }
+  .beta-layout { display: grid; grid-template-columns: 1.15fr 1fr; gap: 24px; align-items: stretch; }
+  .beta-layout > .card { margin: 0; } /* side by side: no stacked-card gap pushing the second one down */
   .steps-card h2 { font-size: 1.2rem; margin: 0 0 14px; }
   .steps-card ol { list-style: none; counter-reset: s; margin: 0; padding: 0; display: grid; gap: 16px; }
   .steps-card li { counter-increment: s; display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: start; color: #d1d1d6; }
@@ -32,12 +33,12 @@
   }
   .steps-card strong { color: var(--text); }
   .steps-card li p { margin: 4px 0 10px; color: var(--muted); font-size: 0.9rem; }
-  .steps-card .button { display: inline-block; width: auto; padding: 11px 18px; font-size: 0.95rem; }
+  .steps-card .button { width: auto; min-height: 46px; padding: 10px 20px; font-size: 0.95rem; }
   .steps-card .small { color: var(--muted); font-size: 0.9rem; margin: 22px 0 0; padding-top: 18px; border-top: 1px solid var(--border); }
 
   form { display: grid; gap: 16px; }
-  .form-card h2 { font-size: 1.2rem; margin: 0 0 4px; }
-  .form-card > p { color: var(--muted); margin: 0 0 20px; font-size: 0.95rem; }
+  .form-card h2 { font-size: 1.2rem; margin: 0 0 6px; }
+  .form-card #signup > p { color: var(--muted); margin: 0 0 20px; font-size: 0.92rem; }
   label { display: grid; gap: 6px; font-weight: 600; font-size: 0.92rem; }
   .hint { font-weight: 400; color: var(--muted); font-size: 0.82rem; }
   input, select {
@@ -63,7 +64,7 @@
   .honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
   .status { margin: 0; font-size: 0.92rem; }
   .status.error { color: var(--error); }
-  form .button { width: 100%; }
+  form .button { width: 100%; min-height: 48px; }
   .button[disabled] { opacity: 0.6; cursor: default; }
   .form-note { color: var(--muted); font-size: 0.82rem; margin: 4px 0 0; }
   .done { text-align: center; padding: 12px 0 4px; }
@@ -107,10 +108,10 @@
           <a class="button primary" href="https://groups.google.com/g/shot-timer-drills-testers">Join the group</a></span></li>
         <li><span><strong>Become a tester.</strong>
           <p>Tap <strong>Become a tester</strong>. If it says the test isn't available, give it a minute after joining the group and try again.</p>
-          <a class="button primary" href="https://play.google.com/apps/testing/com.danielkuruvilla.shottimerdrills">Become a tester</a></span></li>
+          <a class="button" href="https://play.google.com/apps/testing/com.danielkuruvilla.shottimerdrills">Become a tester</a></span></li>
         <li><span><strong>Install Shot Timer Drills</strong> from Google Play and connect your timer.
           <p>Updates arrive through Google Play like any other app.</p>
-          <a class="button primary" href="https://play.google.com/store/apps/details?id=com.danielkuruvilla.shottimerdrills">Open in Google Play</a></span></li>
+          <a class="button" href="https://play.google.com/store/apps/details?id=com.danielkuruvilla.shottimerdrills">Open in Google Play</a></span></li>
       </ol>
       <p class="small">Works with the Competition Electronics ProTimer BT, AMG Commander, SG Timer (Timer 2 and GO), DAA Edge and Kestrel KST1000. No timer yet? You can type times in by hand.</p>
     </section>
@@ -135,7 +136,7 @@
             <input type="email" name="email" autocomplete="email" inputmode="email" required maxlength="120" placeholder="you@gmail.com">
           </label>
 
-          <label>Your shot timer <span class="hint">(optional)</span>
+          <label><span>Your shot timer <span class="hint">(optional)</span></span>
             <select name="timer">
               <option value="">Choose one</option>
               <option>Competition Electronics ProTimer BT</option>
@@ -148,12 +149,12 @@
             </select>
           </label>
 
-          <label>Phone model <span class="hint">(optional)</span>
+          <label><span>Phone model <span class="hint">(optional)</span></span>
             <input type="text" name="phone" maxlength="80" placeholder="e.g. Pixel 8, Galaxy S24">
           </label>
 
           <p class="status" id="form-status" role="status" aria-live="polite"></p>
-          <button class="button primary" type="submit" id="submit-button">Request an invite</button>
+          <button class="button" type="submit" id="submit-button">Request an invite</button>
           <p class="form-note">Your email is used only to invite you to the Android test and to reach you about it. It isn't shared or used for marketing.</p>
         </form>
       </div>
