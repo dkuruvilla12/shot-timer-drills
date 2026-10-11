@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0e0e10">
+<meta name="robots" content="noindex">
+<link rel="icon" href="/download/icon.png">
+<title>Shared drill — Shot Timer Drills</title>
+<link rel="stylesheet" href="/site.css?v=4">
+<style>
+  .drill-card { padding: 26px; }
+  .drill-card h2 { font-size: 1.5rem; margin: 0 0 4px; letter-spacing: -0.01em; }
+  .drill-meta { color: var(--muted); font-size: 0.95rem; margin: 0 0 14px; }
+  .drill-notes { color: #d1d1d6; white-space: pre-line; margin: 0 0 18px; }
+  .stage { border-top: 1px solid var(--border); padding: 14px 0 2px; }
+  .stage h3 { font-size: 1.02rem; margin: 0 0 2px; }
+  .stage .facts { color: var(--muted); font-size: 0.9rem; margin: 0 0 6px; }
+  .stage p.notes { color: #d1d1d6; font-size: 0.93rem; margin: 0 0 10px; white-space: pre-line; }
+  .actions { display: flex; flex-direction: column; gap: 12px; align-items: center; margin: 28px 0 8px; }
+  .actions .button { width: 100%; max-width: 360px; text-align: center; }
+  .stores { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; margin-top: 6px; }
+  .hint { color: var(--muted); font-size: 0.9rem; text-align: center; margin: 4px auto 0; max-width: 52ch; }
+  .error { text-align: center; padding: 28px; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<nav class="site-nav" aria-label="Site">
+  <a class="brand" href="/"><img src="/download/icon.png" alt="" width="32" height="32">Shot Timer Drills</a>
+  <ul>
+    <li><a href="/guides/">Guides</a></li>
+    <li><a href="/support/">Support</a></li>
+    <li><a href="/contact/">Contact</a></li>
+  </ul>
+</nav>
+<main class="page">
+  <header class="page-head">
+    <p class="eyebrow">Shared drill</p>
+    <h1 id="title">Someone shared a drill with you</h1>
+    <p class="lede" id="lede">Open it in Shot Timer Drills to add it to your drills.</p>
+  </header>
+
+  <section class="card error" id="error" hidden>
+    <p><strong>This link doesn't contain a drill.</strong></p>
+    <p class="hint">It may have been cut off when it was copied. Ask the sender to share it again from the app.</p>
+  </section>
+
+  <section class="card drill-card" id="drill" hidden></section>
+
+  <div class="actions" id="actions" hidden>
+    <a class="button primary" id="open" href="#">Open in Shot Timer Drills</a>
+    <p class="hint">Don't have the app yet? Get it, then come back to this page and tap Open.</p>
+    <div class="stores">
+      <a class="store-badge" href="https://apps.apple.com/us/app/shot-timer-drills/id6804109678"><img src="/download/app-store-badge.svg" alt="Download on the App Store" height="44"></a>
+      <a class="button" href="https://play.google.com/store/apps/details?id=com.danielkuruvilla.shottimerdrills">Get it on Google Play</a>
+    </div>
+    <p class="hint">The drill is read in your browser from the link itself — nothing is sent to or stored on this site.</p>
+  </div>
+</main>
+<script>
+(function () {
+  var MAX_INFLATED = 512 * 1024;           // same hard cap as the apps
+  var payload = location.hash.replace(/^#/, '');
+  var $ = function (id) { return document.getElementById(id); };
+
+  function fail() { $('error').hidden = false; $('title').textContent = 'Shared drill'; $('lede').textContent = ''; }
+
+  function el(tag, text, cls) {
+    var e = document.createElement(tag);
+    if (text != null) e.textContent = text;
+    if (cls) e.className = cls;
+    return e;
+  }
+
+  function base64urlToBytes(s) {
+    s = s.replace(/-/g, '+').replace(/_/g, '/');
+    while (s.length % 4) s += '=';
+    var bin = atob(s), out = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+    return out;
+  }
+
+  async function inflateRaw(bytes) {
+    var stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+    var reader = stream.getReader(), chunks = [], total = 0;
+    for (;;) {
+      var r = await reader.read();
+      if (r.done) break;
+      total += r.value.length;
+      if (total > MAX_INFLATED) { reader.cancel(); throw new Error('too large'); }
+      chunks.push(r.value);
+    }
+    var all = new Uint8Array(total), at = 0;
+    chunks.forEach(function (c) { all.set(c, at); at += c.length; });
+    return new TextDecoder().decode(all);
+  }
+
+  function seconds(ms) { return (ms / 1000).toFixed(2).replace(/\.?0+$/, '') + ' s'; }
+
+  function render(drill) {
+    var box = $('drill');
+    box.appendChild(el('h2', drill.name));
+    var meta = [drill.category, drill.fireMode, drill.stages.length + (drill.stages.length === 1 ? ' stage' : ' stages')]
+      .filter(Boolean).join(' · ');
+    box.appendChild(el('p', meta, 'drill-meta'));
+    if (drill.notes) box.appendChild(el('p', drill.notes, 'drill-notes'));
+    drill.stages.slice().sort(function (a, b) { return a.order - b.order; }).forEach(function (s, i) {
+      var st = el('div', null, 'stage');
+      st.appendChild(el('h3', (i + 1) + '. ' + s.name));
+      var facts = [];
+      if (s.expectedRounds) facts.push(s.expectedRounds + (s.expectedRounds === 1 ? ' round' : ' rounds'));
+      if (s.distanceYards) facts.push(s.distanceYards + ' yd');
+      if (s.parTimeMs) facts.push('par ' + seconds(s.parTimeMs));
+      if (s.targetType) facts.push(s.targetType);
+      if (s.weaponType) facts.push(s.weaponType);
+      if (s.scoringMethod) facts.push(s.scoringMethod);
+      st.appendChild(el('p', facts.join(' · '), 'facts'));
+      if (s.notes) st.appendChild(el('p', s.notes, 'notes'));
+      box.appendChild(st);
+    });
+    if (drill.penaltyRules && drill.penaltyRules.length) {
+      var pen = el('div', null, 'stage');
+      pen.appendChild(el('h3', 'Penalties'));
+      pen.appendChild(el('p', drill.penaltyRules.map(function (r) {
+        return r.label + ' +' + r.secondsPerUnit + ' s';
+      }).join(' · '), 'facts'));
+      box.appendChild(pen);
+    }
+    box.hidden = false;
+    $('title').textContent = drill.name;
+    $('lede').textContent = 'Open it in Shot Timer Drills to add it to your drills.';
+    $('open').href = 'shottimerdrills://d#' + payload;
+    $('actions').hidden = false;
+    document.title = drill.name + ' — Shot Timer Drills';
+  }
+
+  (async function () {
+    try {
+      if (!payload || typeof DecompressionStream === 'undefined') return fail();
+      var snap = JSON.parse(await inflateRaw(base64urlToBytes(payload)));
+      if (!snap || snap.kind !== 'drill' || !Array.isArray(snap.drills) || snap.drills.length !== 1) return fail();
+      var d = snap.drills[0];
+      if (typeof d.name !== 'string' || !Array.isArray(d.stages) || d.stages.length > 40) return fail();
+      render(d);
+    } catch (e) { fail(); }
+  })();
+})();
+</script>
+</body>
+</html>

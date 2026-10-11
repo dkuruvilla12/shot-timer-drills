@@ -1,0 +1,12 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["F8Z5JJK6NX.com.danielkuruvilla.ShotTimerDrills"],
+        "components": [
+          { "/": "/d/*", "comment": "Shared drill links open in the app" }
+        ]
+      }
+    ]
+  }
+}
