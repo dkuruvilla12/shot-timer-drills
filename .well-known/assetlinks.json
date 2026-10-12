@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.danielkuruvilla.shottimerdrills",
+      "sha256_cert_fingerprints": [
+        "9A:D7:ED:81:0A:67:E2:FC:C7:61:D9:B1:54:BE:BB:99:FD:4E:C4:2C:7F:E2:D9:95:D7:59:56:69:9F:3D:01:FE",
+        "C7:C8:45:76:EA:0F:76:B5:41:4C:45:6F:AB:EE:37:73:B6:EF:D9:FB:86:0E:13:59:AC:99:E0:C0:D3:09:36:51"
+      ]
+    }
+  }
+]
