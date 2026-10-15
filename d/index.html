@@ -43,7 +43,7 @@
   <header class="page-head">
     <p class="eyebrow">Import a drill</p>
     <h1 id="title">Someone shared a drill with you</h1>
-    <p class="lede" id="lede">Open it in Shot Timer Drills, then tap Import Drill to add it to your Drills.</p>
+    <p class="lede" id="lede">Open it in Shot Timer Drills, then tap Import Drill to add it to your Drills. If you already have this drill, you can tap Update My Copy instead.</p>
   </header>
 
   <section class="card error" id="error" hidden>
@@ -134,7 +134,7 @@
     }
     box.hidden = false;
     $('title').textContent = drill.name;
-    $('lede').textContent = 'Open it in Shot Timer Drills, then tap Import Drill to add it to your Drills.';
+    $('lede').textContent = 'Open it in Shot Timer Drills, then tap Import Drill to add it to your Drills. If you already have this drill, you can tap Update My Copy instead.';
     $('open').href = 'shottimerdrills://d#' + payload;
     $('actions').hidden = false;
     document.title = drill.name + ' — Shot Timer Drills';
