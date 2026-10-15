@@ -93,11 +93,9 @@
     padding: 28px 0; text-align: center;
   }
   .timers p { margin: 0 0 14px; color: var(--muted); font-size: 0.9rem; }
-  .timers ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
-  .timers li {
-    padding: 8px 14px; border-radius: 999px; background: var(--card);
-    border: 1px solid var(--border); font-size: 0.9rem; font-weight: 600;
-  }
+  .timers ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px 14px; }
+  .timers li { line-height: 0; }
+  .timers li img { height: 150px; width: auto; display: block; }
 
   /* Features */
   .features { padding: 80px 0 20px; }
@@ -153,6 +151,7 @@
     .get-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 520px) {
+    .timers li img { height: 112px; }
     .grid { grid-template-columns: 1fr; }
     .phones .phone:first-child { width: 190px; transform: translateX(-34px) rotate(-3deg); }
     .phones .phone:last-child { width: 175px; transform: translateX(52px) rotate(4deg); }
@@ -197,11 +196,12 @@
   <div class="wrap">
     <p>Works with the Bluetooth shot timers you already own</p>
     <ul>
-      <li>Competition Electronics ProTimer BT</li>
-      <li>AMG Commander</li>
-      <li>SG Timer, Timer 2 &amp; GO</li>
-      <li>Double Alpha Academy Edge</li>
-      <li>Kestrel KST1000</li>
+      <li><img src="images/timers/protimer-bt.webp" alt="Competition Electronics ProTimer BT" width="247" height="380" loading="lazy"></li>
+      <li><img src="images/timers/amg-commander.webp" alt="AMG Commander" width="251" height="380" loading="lazy"></li>
+      <li><img src="images/timers/sg-timer-2.webp" alt="SG Timer, Timer 2 &amp; GO" width="212" height="380" loading="lazy"></li>
+      <li><img src="images/timers/daa-edge.webp" alt="Double Alpha Academy Edge" width="232" height="380" loading="lazy"></li>
+      <li><img src="images/timers/kestrel-kst1000.webp" alt="Kestrel KST1000" width="251" height="380" loading="lazy"></li>
+      <li><img src="images/timers/special-pie-m1a2.webp" alt="Special Pie M1A2+" width="310" height="380" loading="lazy"></li>
     </ul>
   </div>
 </section>
