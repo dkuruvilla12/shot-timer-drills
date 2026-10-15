@@ -54,12 +54,14 @@
   <section class="card drill-card" id="drill" hidden></section>
 
   <div class="actions" id="actions" hidden>
-    <a class="button primary" id="open" href="#">Open in the app to import</a>
-    <p class="hint">Don't have the app yet? Get it, then come back to this page and tap Open.</p>
-    <div class="stores">
+    <a class="button primary" id="open" href="#" hidden>Open in Shot Timer Drills</a>
+    <p class="hint" id="open-hint" hidden>Opens the app if you have it, or takes you to get it.</p>
+    <p class="hint" id="get-app" hidden>Nothing happened? <a href="https://apps.apple.com/us/app/shot-timer-drills/id6804109678">Get Shot Timer Drills on the App Store</a>, then open this link again.</p>
+    <div class="stores" id="stores" hidden>
       <a class="store-badge" href="https://apps.apple.com/us/app/shot-timer-drills/id6804109678"><img src="/download/app-store-badge.svg" alt="Download on the App Store" height="44"></a>
       <a class="button" href="/beta/">Android: join the beta</a>
     </div>
+    <p class="hint" id="desktop-hint" hidden>Open this link on your phone to import the drill.</p>
     <p class="hint">The drill is read in your browser from the link itself — nothing is sent to or stored on this site.</p>
   </div>
 </main>
@@ -135,9 +137,46 @@
     box.hidden = false;
     $('title').textContent = drill.name;
     $('lede').textContent = 'Open it in Shot Timer Drills, then tap Import Drill to add it to your Drills. If you already have this drill, you can tap Update My Copy instead.';
-    $('open').href = 'shottimerdrills://d#' + payload;
+    setupOpenButton();
     $('actions').hidden = false;
     document.title = drill.name + ' — Shot Timer Drills';
+  }
+
+  var BETA_PAGE = 'https://shottimerdrills.com/beta/';
+  var ANDROID_PACKAGE = 'com.danielkuruvilla.shottimerdrills';
+
+  // One button for everyone. On Android it opens the app when it is installed and otherwise goes
+  // to the beta page (an intent link with a fallback, which Android handles itself). iPhone has no
+  // such fallback, so the button opens the app and the App Store link shows up if nothing happens.
+  function setupOpenButton() {
+    var btn = $('open'), ua = navigator.userAgent || '';
+    var isAndroid = /Android/i.test(ua);
+    var isIOS = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    if (!isAndroid && !isIOS) { $('stores').hidden = false; $('desktop-hint').hidden = false; return; }
+    btn.hidden = false; $('open-hint').hidden = false;
+
+    if (isAndroid) {
+      btn.href = 'intent://d#' + payload + '#Intent;scheme=shottimerdrills;package=' + ANDROID_PACKAGE +
+        ';S.browser_fallback_url=' + encodeURIComponent(BETA_PAGE) + ';end';
+      return;
+    }
+
+    // iPhone: the button is a plain link to the app. If this page is still showing a moment after
+    // the tap, the App Store link appears under it. It never replaces the button, because iOS may
+    // still be showing its own "Open in Shot Timer Drills?" prompt at that moment.
+    btn.href = 'shottimerdrills://d#' + payload;
+    $('open-hint').textContent = 'Opens the app if you have it.';
+    var timer = null, left = false;
+    function leaving() { left = true; clearTimeout(timer); }
+    window.addEventListener('pagehide', leaving);
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) leaving(); else { left = false; $('get-app').hidden = true; }
+    });
+    btn.addEventListener('click', function () {
+      left = false;
+      clearTimeout(timer);
+      timer = setTimeout(function () { if (!left && !document.hidden) $('get-app').hidden = false; }, 2200);
+    });
   }
 
   (async function () {
