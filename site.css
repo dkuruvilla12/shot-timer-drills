@@ -89,6 +89,8 @@ img { max-width: 100%; }
   padding: 32px;
 }
 .card + .card { margin-top: 16px; }
+/* Cards in a grid are spaced by the grid gap, so they all start level and match in height. */
+.grid > .card, .get-grid > .card { margin-top: 0; }
 .prose h2 {
   font-size: 1.3rem;
   line-height: 1.25;
