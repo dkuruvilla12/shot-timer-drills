@@ -354,8 +354,10 @@
     return new Uint8Array(plain);
   }
 
-  // The short-link path. Network trouble, a timeout and 5xx offer Retry; 400/404, a bad blob, a failed tag and a bad
-  // payload all say the link has expired or isn't valid.
+  // The short-link path. Network trouble, a timeout, a redirect and any status other than 200/400/404 say "couldn't load"
+  // with Retry. A 404 says the link has expired or isn't valid, with a "wait a minute" hint and Retry (KV can lag about
+  // a minute after a link is made). A 400, a bad or empty or oversize body, a failed tag and a bad payload say the link has
+  // expired or isn't valid, without Retry.
   async function loadShort() {
     $('error').hidden = true; $('loading').hidden = false;
     $('title').textContent = 'Shared drill'; $('lede').textContent = '';
