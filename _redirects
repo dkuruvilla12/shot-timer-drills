@@ -1,4 +1,5 @@
 # Short links: https://shottimerdrills.com/d/<code>#<key> is served by the page at /d/ (a rewrite, status 200, not a redirect).
-# The page reads the code from location.pathname and the key from the fragment. This only matches paths under /d/,
-# so /api/* (Pages Functions) and /.well-known/* are not affected, and /d/ itself keeps serving d/index.html.
-/d/*  /d/index.html  200
+# The page reads the code from location.pathname and the key from the fragment. A single path segment under /d/ is
+# rewritten to /d/ (the target is not matched by the source pattern, so Pages cannot read it as a rewrite loop), which
+# serves d/index.html. /api/* (Pages Functions), /.well-known/* and /library/* never match; /d/ itself is unchanged.
+/d/:code  /d/  200
