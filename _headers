@@ -13,3 +13,15 @@
 
 /library/v1/drills.json.sig
   Content-Type: text/plain; charset=utf-8
+
+# Short-link API. Pages does not apply this file to Function responses, so the functions set the same headers
+# themselves (functions/api/_lib.js); the rule is here so the two cannot drift apart unnoticed.
+/api/d*
+  Cache-Control: no-store
+  X-Content-Type-Options: nosniff
+
+# The link's fragment holds the decryption key: never send a Referer from these pages.
+/d/
+  Referrer-Policy: no-referrer
+/d/*
+  Referrer-Policy: no-referrer
