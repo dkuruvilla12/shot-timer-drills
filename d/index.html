@@ -363,8 +363,9 @@
     try {
       try {
         response = await fetch('/api/d/' + code, {
-          method: 'GET', credentials: 'omit', cache: 'no-store', referrerPolicy: 'no-referrer', signal: controller.signal,
+          method: 'GET', credentials: 'omit', cache: 'no-store', referrerPolicy: 'no-referrer', redirect: 'error', signal: controller.signal,
         });
+        // Redirects are never followed (redirect: 'error' makes a 3xx a network failure, so it reads as "couldn't load").
         if (response.status === 404 || response.status === 400) return fail(MSG_GONE);
         if (response.status !== 200) return fail(MSG_LOAD);
         blob = await readCapped(response);
