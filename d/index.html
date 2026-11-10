@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0e0e10">
 <meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
 <link rel="icon" href="/download/icon.png">
 <title>Import this drill into Shot Timer Drills</title>
 <meta property="og:site_name" content="Shot Timer Drills">
@@ -46,9 +47,14 @@
     <p class="lede" id="lede">Open it in Shot Timer Drills, then tap Import Drill to add it to your Drills. If you already have this drill, you can tap Update My Copy instead.</p>
   </header>
 
+  <section class="card error" id="loading" role="status" hidden>
+    <p><strong>Loading the drill…</strong></p>
+  </section>
+
   <section class="card error" id="error" hidden>
-    <p><strong>This link doesn't contain a drill.</strong></p>
-    <p class="hint">It may have been cut off when it was copied. Ask the sender to share it again from the app.</p>
+    <p><strong id="error-title">This link doesn't contain a drill.</strong></p>
+    <p class="hint" id="error-hint">It may have been cut off when it was copied. Ask the sender to share it again from the app.</p>
+    <p><button type="button" class="button primary" id="retry" hidden>Retry</button></p>
   </section>
 
   <section class="card drill-card" id="drill" hidden></section>
@@ -62,16 +68,46 @@
       <a class="button" href="/beta/">Android: join the beta</a>
     </div>
     <p class="hint" id="desktop-hint" hidden>Open this link on your phone to import the drill.</p>
-    <p class="hint">The drill is read in your browser from the link itself — nothing is sent to or stored on this site.</p>
+    <p class="hint" id="privacy-hint">The drill is read in your browser from the link itself — nothing is sent to or stored on this site.</p>
   </div>
 </main>
 <script>
 (function () {
   var MAX_INFLATED = 512 * 1024;           // same hard cap as the apps
-  var payload = location.hash.replace(/^#/, '');
+  var MAX_BLOB = 65536, MIN_BLOB = 30;     // short-link blob limits (Documentation/Drill-Library-and-Links.md, section 2c)
+  var FETCH_TIMEOUT_MS = 10000;
+  var CODE_RE = /^[0-9a-hjkmnp-tv-z]{8}$/;  // 8 characters of 0123456789abcdefghjkmnpqrstvwxyz
+  var KEY_RE = /^[A-Za-z0-9_-]{22}$/;       // base64url (no padding) of 16 bytes
+  var hash = location.hash.replace(/^#/, '');
   var $ = function (id) { return document.getElementById(id); };
 
-  function fail() { $('error').hidden = false; $('title').textContent = 'Shared drill'; $('lede').textContent = ''; }
+  // What this page was opened with. /d/ (or /d) with a fragment is the long link (the payload is in the fragment); any
+  // other path under /d/ is a short link /d/<code>#<key>, served by the _redirects rewrite.
+  var path = location.pathname;
+  var isLong = !/^\/d\//.test(path) || path === '/d/' || path === '/d/index.html';
+  var code = null, keyText = null;
+  if (!isLong) {
+    var m = /^\/d\/([^\/]+)$/.exec(path);
+    if (m && CODE_RE.test(m[1]) && KEY_RE.test(hash)) { code = m[1]; keyText = hash; }
+  }
+  var shortLink = code !== null;
+  // The long-link payload, or the short link's code + key: the "Open in Shot Timer Drills" button carries the same thing.
+  var openPath = shortLink ? 'd/' + code + '#' + keyText : 'd#' + hash;
+
+  var MSG_LOAD = { title: "Couldn't load that drill. Check your connection and try again.", hint: '', retry: true };
+  var MSG_GONE = { title: "That link has expired or isn't valid.", hint: 'Ask the sender to share it again from the app.' };
+  var MSG_LINK = { title: "That link isn't a valid drill.", hint: 'It may have been cut off when it was copied. Ask the sender to share it again from the app.' };
+
+  function fail(msg) {
+    $('loading').hidden = true;
+    if (msg) {
+      $('error-title').textContent = msg.title;
+      $('error-hint').textContent = msg.hint;
+      $('error-hint').hidden = !msg.hint;
+      $('retry').hidden = !msg.retry;
+    }
+    $('error').hidden = false; $('title').textContent = 'Shared drill'; $('lede').textContent = '';
+  }
 
   function el(tag, text, cls) {
     var e = document.createElement(tag);
@@ -241,7 +277,9 @@
     btn.hidden = false; $('open-hint').hidden = false;
 
     if (isAndroid) {
-      btn.href = 'intent://d#' + payload + '#Intent;scheme=shottimerdrills;package=' + ANDROID_PACKAGE +
+      // The data part (intent://d/<code>#<key>) may hold a fragment: Android reads the intent part from the LAST '#',
+      // and neither a base64url key nor the encoded fallback URL contains one.
+      btn.href = 'intent://' + openPath + '#Intent;scheme=shottimerdrills;package=' + ANDROID_PACKAGE +
         ';S.browser_fallback_url=' + encodeURIComponent(BETA_PAGE) + ';end';
       return;
     }
@@ -249,7 +287,7 @@
     // iPhone: the button is a plain link to the app. If this page is still showing a moment after
     // the tap, the App Store link appears under it. It never replaces the button, because iOS may
     // still be showing its own "Open in Shot Timer Drills?" prompt at that moment.
-    btn.href = 'shottimerdrills://d#' + payload;
+    btn.href = 'shottimerdrills://' + openPath;
     $('open-hint').textContent = 'Opens the app if you have it.';
     var timer = null, left = false;
     function leaving() { left = true; clearTimeout(timer); }
@@ -264,29 +302,97 @@
     });
   }
 
-  (async function () {
+  // Raw DEFLATE bytes of a v2 (or v1) payload -> the drill to show. Both link kinds end here, so every check of
+  // section 2b applies to both. Throws when the bytes are not one valid drill.
+  async function drillFromPayloadBytes(bytes) {
+    if (typeof DecompressionStream === 'undefined') throw new Error('unsupported');
+    var json = await inflateRaw(bytes);
+    if (tooDeep(json)) throw new Error('too deep');
+    // Every number must be a finite double: JSON.parse reads 1e999 as Infinity, so the reviver (which sees every
+    // value, also under unknown keys) refuses it. NaN / Infinity literals and other non-JSON text already throw.
+    var snap = JSON.parse(json, function (key, value) {
+      if (typeof value === 'number' && !isFinite(value)) throw new Error('non-finite number');
+      return value;
+    });
+    var d;
+    if (isPlainObject(snap) && has(snap, 'v')) {
+      // Version 2 (the compact form): "v" must be 2 and "d" one drill.
+      d = expandV2(snap);
+    } else {
+      // Version 1: the whole snapshot, which must hold exactly one drill.
+      if (!snap || snap.kind !== 'drill' || !Array.isArray(snap.drills) || snap.drills.length !== 1) throw new Error('not a drill');
+      d = snap.drills[0];
+    }
+    if (!isPlainObject(d) || typeof d.name !== 'string' || !Array.isArray(d.stages) || d.stages.length > 40) throw new Error('not a drill');
+    return d;
+  }
+
+  // Reads at most MAX_BLOB bytes of the response, however long the server claims the body is.
+  async function readCapped(response) {
+    var declared = response.headers.get('Content-Length');
+    if (declared !== null && Number(declared) > MAX_BLOB) throw new Error('too large');
+    var reader = response.body.getReader(), chunks = [], total = 0;
+    for (;;) {
+      var r = await reader.read();
+      if (r.done) break;
+      total += r.value.length;
+      if (total > MAX_BLOB) { reader.cancel(); throw new Error('too large'); }
+      chunks.push(r.value);
+    }
+    var all = new Uint8Array(total), at = 0;
+    chunks.forEach(function (c) { all.set(c, at); at += c.length; });
+    return all;
+  }
+
+  // Blob = 0x01 + 12-byte nonce + AES-128-GCM ciphertext + 16-byte tag, no additional data (section 2c).
+  async function decryptBlob(blob, keyBytes) {
+    if (blob.length < MIN_BLOB || blob.length > MAX_BLOB || blob[0] !== 0x01 || keyBytes.length !== 16) throw new Error('bad blob');
+    var key = await crypto.subtle.importKey('raw', keyBytes, { name: 'AES-GCM' }, false, ['decrypt']);
+    var plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: blob.subarray(1, 13), tagLength: 128 }, key, blob.subarray(13));
+    return new Uint8Array(plain);
+  }
+
+  // The short-link path. Network trouble, a timeout and 5xx offer Retry; 400/404, a bad blob, a failed tag and a bad
+  // payload all say the link has expired or isn't valid.
+  async function loadShort() {
+    $('error').hidden = true; $('loading').hidden = false;
+    $('title').textContent = 'Shared drill'; $('lede').textContent = '';
+    var response, blob;
+    var controller = new AbortController();
+    var timer = setTimeout(function () { controller.abort(); }, FETCH_TIMEOUT_MS);
     try {
-      if (!payload || typeof DecompressionStream === 'undefined') return fail();
-      var json = await inflateRaw(base64urlToBytes(payload));
-      if (tooDeep(json)) return fail();
-      // Every number must be a finite double: JSON.parse reads 1e999 as Infinity, so the reviver (which sees every
-      // value, also under unknown keys) refuses it. NaN / Infinity literals and other non-JSON text already throw.
-      var snap = JSON.parse(json, function (key, value) {
-        if (typeof value === 'number' && !isFinite(value)) throw new Error('non-finite number');
-        return value;
-      });
-      var d;
-      if (isPlainObject(snap) && has(snap, 'v')) {
-        // Version 2 (the compact form): "v" must be 2 and "d" one drill.
-        d = expandV2(snap);
-      } else {
-        // Version 1: the whole snapshot, which must hold exactly one drill.
-        if (!snap || snap.kind !== 'drill' || !Array.isArray(snap.drills) || snap.drills.length !== 1) return fail();
-        d = snap.drills[0];
+      try {
+        response = await fetch('/api/d/' + code, {
+          method: 'GET', credentials: 'omit', cache: 'no-store', referrerPolicy: 'no-referrer', signal: controller.signal,
+        });
+        if (response.status === 404 || response.status === 400) return fail(MSG_GONE);
+        if (response.status !== 200) return fail(MSG_LOAD);
+        blob = await readCapped(response);
+      } catch (e) {
+        return fail(e && e.message === 'too large' ? MSG_GONE : MSG_LOAD);
       }
-      if (!isPlainObject(d) || typeof d.name !== 'string' || !Array.isArray(d.stages) || d.stages.length > 40) return fail();
+    } finally { clearTimeout(timer); }
+    try {
+      var d = await drillFromPayloadBytes(await decryptBlob(blob, base64urlToBytes(keyText)));
+      $('loading').hidden = true;
       render(d);
-    } catch (e) { fail(); }
+    } catch (e) { fail(MSG_GONE); }
+  }
+
+  (async function () {
+    if (isLong) {
+      // The existing long link: the payload is the fragment.
+      try {
+        if (!hash) return fail();
+        render(await drillFromPayloadBytes(base64urlToBytes(hash)));
+      } catch (e) { fail(); }
+      return;
+    }
+    // A short link: the page text says what is stored where.
+    $('privacy-hint').textContent = 'This drill is kept on this site only as scrambled data that nobody here can read. The key is in the link after the # and is never sent to the site; your browser unlocks the drill itself.';
+    if (!shortLink) return fail(MSG_LINK);
+    $('retry').addEventListener('click', loadShort);
+    loadShort();
   })();
 })();
 </script>
