@@ -10,7 +10,6 @@ export const MAX_BLOB = 65536;
 export const BLOB_VERSION = 0x01;
 export const TTL_SECONDS = 366 * 86400;        // a blob expires 366 days after it was last opened
 export const RENEW_AFTER_DAYS = 30;            // a GET re-writes the entry at most once per 30 days
-export const MAX_CODE_TRIES = 5;
 const DAY_MS = 86400000;
 
 // Error bodies are generic on purpose: nothing about the request is echoed back.

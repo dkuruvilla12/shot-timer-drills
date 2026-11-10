@@ -2,7 +2,7 @@
 // Contract: Documentation/Drill-Library-and-Links.md, section 2c. Needs the KV namespace binding DRILLS.
 // Nothing is logged: no bodies, codes, keys or IP addresses.
 import {
-  MAX_BLOB, MAX_CODE_TRIES, errorResponse, jsonResponse, makeCode, methodNotAllowed,
+  MAX_BLOB, errorResponse, jsonResponse, makeCode, methodNotAllowed,
   putOptions, dayNumber, readBodyCapped, validateBlob,
 } from '../_lib.js';
 
@@ -29,17 +29,15 @@ export async function onRequestPost(context) {
   if (!validateBlob(bytes)) return errorResponse(400);
 
   if (!env || !env.DRILLS) return errorResponse(503);
+  // No existence check before the write: a read of the new code would let KV cache "not found" for it (up to ~60 s),
+  // and a collision among 2^40 codes is negligible. A storage error is a 503; the app then falls back to the long link.
   try {
-    for (let attempt = 0; attempt < MAX_CODE_TRIES; attempt++) {
-      const code = makeCode();
-      if (await env.DRILLS.get(code, { type: 'arrayBuffer' }) !== null) continue;   // already taken: draw again
-      await env.DRILLS.put(code, bytes, putOptions(dayNumber(Date.now())));
-      return jsonResponse(201, { code });
-    }
+    const code = makeCode();
+    await env.DRILLS.put(code, bytes, putOptions(dayNumber(Date.now())));
+    return jsonResponse(201, { code });
   } catch (e) {
     return errorResponse(503);
   }
-  return errorResponse(503);   // five collisions in a row
 }
 
 // Every other method: 405 with Allow (method-specific handlers take precedence over onRequest).
