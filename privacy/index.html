@@ -22,13 +22,13 @@
   <header class="page-head">
     <p class="eyebrow">Shot Timer Drills</p>
     <h1>Privacy Policy</h1>
-    <p class="meta">Effective date: October 11, 2026</p>
+    <p class="meta">Effective date: November 10, 2026</p>
   </header>
   <article class="card prose">
     <p>Shot Timer Drills ("the app") is available for iPhone (with an Apple Watch companion) and for Android. It is built to keep your training data on your own devices. This policy explains, plainly, what the app stores, what little it sends, and where. Where the iPhone and Android versions differ, it says so.</p>
 
     <h2>Summary</h2>
-    <p><strong>There are no accounts, no advertising, no analytics, and no tracking.</strong> Everything you enter — drills, session history, shot times, shooter names, personal bests, gear, notes and videos — stays on your device. On iPhone it can also sync to your own private iCloud account; on Android it can be included in your phone's own Google backup. The developer never receives it and has no server it could be sent to.</p>
+    <p><strong>There are no accounts, no advertising, no analytics, and no tracking.</strong> Everything you enter — drills, session history, shot times, shooter names, personal bests, gear, notes and videos — stays on your device. On iPhone it can also sync to your own private iCloud account; on Android it can be included in your phone's own Google backup. The developer never receives it. The one exception is a drill you choose to share with Share Link, which can be kept on shottimerdrills.com as encrypted data that only the link itself can unlock (see <a href="#drill-library">Drill library and shared drills</a>).</p>
     <p><strong>The one thing the app sends to the developer is a timer diagnostic report</strong>, described under <a href="#timer-reports">Timer reports</a>. These reports describe how a Bluetooth shot timer behaved. They never contain shooter names, drill names, notes, or scores. Automatic reports can be turned off at any time in Settings.</p>
 
     <h2>What data the app stores, and where</h2>
@@ -79,6 +79,7 @@
     <ul>
       <li>timer reports, sent to Formspree as described above;</li>
       <li>downloading new built-in drills from shottimerdrills.com, as described in <a href="#drill-library">Drill library and shared drills</a>;</li>
+      <li>when you tap Share Link (and when someone opens a short link), sending or fetching the encrypted drill on shottimerdrills.com, as described there;</li>
       <li>on iPhone, your device syncing through Apple's CloudKit — with your own private iCloud account;</li>
       <li>on Android, Android's own backup to your Google account if you have it turned on.</li>
     </ul>
@@ -86,7 +87,11 @@
 
     <h2 id="drill-library">Drill library and shared drills</h2>
     <p><strong>New drills.</strong> The app can download new built-in drills from shottimerdrills.com. It checks at most once a day, and you can turn this off in Settings (Drill library). The request is an ordinary HTTPS download of a public file: it carries no account, no device identifier and none of your data, and what comes back is a list of drills that the app checks is genuinely from the developer (it is digitally signed) before using it. Like any web request, the site's host receives your device's IP address when the file is fetched; the app doesn't use it. Drills you have deleted stay deleted, and drills you already have are never changed.</p>
-    <p><strong>Sharing a drill by link.</strong> A shared drill link (shottimerdrills.com/d/…) contains the drill itself after the # sign. That part of a web address is never sent to the website, and the page shows the drill using code that runs in your browser. Nothing about the drill is stored on the site. Opening a link in the app shows you the drill and asks before anything is added.</p>
+    <p><strong>Sharing a drill by link.</strong> Share Link makes one of two kinds of link to a single drill, and the app chooses for you. Opening a link in the app shows you the drill and asks before anything is added.</p>
+    <ul>
+      <li><strong>The long link</strong> (shottimerdrills.com/d/ followed by a # and a long string) contains the drill itself after the # sign. That part of a web address is never sent to the website, and the page shows the drill using code that runs in your browser. Nothing about the drill is stored on the site. The app uses this kind when it can't reach the site.</li>
+      <li><strong>The short link</strong> (shottimerdrills.com/d/ followed by an eight-character code, then a # and a key) is much shorter. The drill is encrypted on your phone before it leaves it, with a random key that exists only in the link, and only the scrambled data is sent to shottimerdrills.com. The site stores that scrambled data and the date the link was last opened — nothing else. The key sits after the # sign, so it is never sent to the site, and the site cannot read the drill; the person who opens the link decrypts it on their own phone or in their browser. A short link stops working 366 days after it was last opened (opening it again restarts the clock, at most once every 30 days). Like any website, the site sees the IP address of whoever sends or opens a link and the size of the scrambled data; it doesn't use or keep them for anything else. Anyone who has a short link, key included, can read that one drill, and the sender can't take a link back once it has been shared. To have a stored drill deleted sooner, email <a href="mailto:support@shottimerdrills.com">support@shottimerdrills.com</a> with the link's eight-character code (the part after /d/ and before the #) and it will be removed.</li>
+    </ul>
 
     <h2>Children's privacy</h2>
     <p>The app is a firearms training tool intended for adults. It does not knowingly collect personal information from anyone under 18, and the only data it sends — timer reports — contains no names or other personal information unless someone chooses to type an email address into a report.</p>
