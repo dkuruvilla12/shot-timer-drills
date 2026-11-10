@@ -96,6 +96,8 @@
 
   var MSG_LOAD = { title: "Couldn't load that drill. Check your connection and try again.", hint: '', retry: true };
   var MSG_GONE = { title: "That link has expired or isn't valid.", hint: 'Ask the sender to share it again from the app.' };
+  // A 404 can also be a link made seconds ago that another KV location has not seen yet: same text plus a hint and Retry.
+  var MSG_404 = { title: "That link has expired or isn't valid.", hint: 'If it was just shared, wait a minute and try again.', retry: true };
   var MSG_LINK = { title: "That link isn't a valid drill.", hint: 'It may have been cut off when it was copied. Ask the sender to share it again from the app.' };
 
   function fail(msg) {
@@ -366,7 +368,8 @@
           method: 'GET', credentials: 'omit', cache: 'no-store', referrerPolicy: 'no-referrer', redirect: 'error', signal: controller.signal,
         });
         // Redirects are never followed (redirect: 'error' makes a 3xx a network failure, so it reads as "couldn't load").
-        if (response.status === 404 || response.status === 400) return fail(MSG_GONE);
+        if (response.status === 404) return fail(MSG_404);
+        if (response.status === 400) return fail(MSG_GONE);
         if (response.status !== 200) return fail(MSG_LOAD);
         blob = await readCapped(response);
       } catch (e) {
