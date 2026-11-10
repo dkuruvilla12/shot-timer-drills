@@ -100,8 +100,93 @@
     }
     var all = new Uint8Array(total), at = 0;
     chunks.forEach(function (c) { all.set(c, at); at += c.length; });
-    return new TextDecoder().decode(all);
+    // The inflated bytes must be UTF-8 JSON whose first byte is `{` (0x7B). Checked on the bytes, because
+    // TextDecoder silently strips a byte order mark; fatal makes invalid UTF-8 an error instead of U+FFFD.
+    if (total === 0 || all[0] !== 0x7B) throw new Error('not a JSON object');
+    return new TextDecoder('utf-8', { fatal: true }).decode(all);
   }
+
+  // BEGIN expandV2
+  // Share Link v2 (Documentation/Drill-Library-and-Links.md, section 2b): the link carries {"v":2,"d":<drill>} with
+  // short key names and the defaults left out. This undoes the renames and fills in what render() reads, giving the
+  // same drill shape a v1 link carries. Ids and dates are not needed to show a drill, so none are made up here.
+  var V2_DRILL = { i: 'id', n: 'name', o: 'notes', c: 'category', f: 'fireMode', m: 'suggestedRunMode',
+                   p: 'penaltyScope', r: 'penaltyRules', s: 'stages' };
+  var V2_STAGE = { i: 'id', n: 'name', e: 'expectedRounds', o: 'notes', t: 'totalPossiblePoints', y: 'targetType',
+                   c: 'scoringMethod', k: 'targetCount', w: 'weaponType', a: 'parTimeMs', d: 'distanceYards',
+                   z: 'scoreZones', h: 'usesSimpleHitMissEntry', q: 'requiresParTime', g: 'ignoresShotsOverPar',
+                   l: 'targetLayout', u: 'repetitions', x: 'gapMarkers', j: 'targetTypeNote' };
+  var V2_RULE = { l: 'label', k: 'kind', s: 'secondsPerUnit' };
+  var V2_ZONE = { l: 'label', p: 'points', x: 'isXRing' };
+  var V2_PLACEMENT = { d: 'distanceYards', s: 'spacingFromPreviousYards', y: 'targetTypeRaw' };
+  var V2_MARKER = { k: 'kind', a: 'after' };
+
+  function isPlainObject(x) { return x !== null && typeof x === 'object' && !Array.isArray(x); }
+  function has(o, k) { return Object.prototype.hasOwnProperty.call(o, k); }
+
+  // Renames the short keys of one object back to their full names; a key that is not in the table is kept as is.
+  function longKeys(obj, table) {
+    if (!isPlainObject(obj)) throw new Error('not an object');
+    var out = {};
+    Object.keys(obj).forEach(function (k) {
+      // A short key together with the long name it stands for ({"i":..,"id":..}) makes the link not a drill.
+      if (has(table, k) && has(obj, table[k])) throw new Error('short and long key together');
+      var name = has(table, k) ? table[k] : k;
+      if (name !== '__proto__') out[name] = obj[k];
+    });
+    return out;
+  }
+
+  // A list key: absent or null reads as an empty list; any other non-array value, or an item that is not an
+  // object, is not a drill.
+  function longList(list, table) {
+    if (list == null) return [];
+    if (!Array.isArray(list)) throw new Error('not a list');
+    return list.map(function (x) { return longKeys(x, table); });
+  }
+
+  // "v" must be a JSON number equal to 2 (2.0 parses to 2; a string, boolean, null, array or object is rejected).
+  function expandV2(snap) {
+    if (typeof snap.v !== 'number' || snap.v !== 2 || !isPlainObject(snap.d)) throw new Error('not a v2 payload');
+    var d = longKeys(snap.d, V2_DRILL);
+    if (!has(d, 'name')) d.name = '';
+    if (!has(d, 'notes')) d.notes = '';
+    d.penaltyRules = longList(d.penaltyRules, V2_RULE);
+    d.penaltyRules.forEach(function (r) { if (!has(r, 'label')) r.label = ''; });
+    d.stages = longList(d.stages, V2_STAGE).map(function (s, index) {
+      s.order = index;                                   // the stage array is already in order
+      if (!has(s, 'name')) s.name = '';
+      if (!has(s, 'notes')) s.notes = '';
+      if (has(s, 'scoreZones')) {
+        s.scoreZones = longList(s.scoreZones, V2_ZONE);
+        s.scoreZones.forEach(function (z) {
+          if (!has(z, 'label')) z.label = '';
+          if (!has(z, 'isXRing')) z.isXRing = false;
+        });
+      }
+      if (has(s, 'targetLayout')) s.targetLayout = longList(s.targetLayout, V2_PLACEMENT);
+      if (has(s, 'gapMarkers')) s.gapMarkers = longList(s.gapMarkers, V2_MARKER);
+      return s;
+    });
+    return d;
+  }
+
+  // JSON nested deeper than 64 levels is rejected before it is parsed (scans outside string literals only).
+  function tooDeep(text) {
+    var depth = 0, inString = false, escaped = false;
+    for (var i = 0; i < text.length; i++) {
+      var ch = text.charAt(i);
+      if (inString) {
+        if (escaped) escaped = false;
+        else if (ch === '\\') escaped = true;
+        else if (ch === '"') inString = false;
+      } else if (ch === '"') inString = true;
+      else if (ch === '[' || ch === '{') { if (++depth > 64) return true; }
+      else if (ch === ']' || ch === '}') depth--;
+    }
+    return false;
+  }
+  // END expandV2
 
   function seconds(ms) { return (ms / 1000).toFixed(2).replace(/\.?0+$/, '') + ' s'; }
 
@@ -182,10 +267,24 @@
   (async function () {
     try {
       if (!payload || typeof DecompressionStream === 'undefined') return fail();
-      var snap = JSON.parse(await inflateRaw(base64urlToBytes(payload)));
-      if (!snap || snap.kind !== 'drill' || !Array.isArray(snap.drills) || snap.drills.length !== 1) return fail();
-      var d = snap.drills[0];
-      if (typeof d.name !== 'string' || !Array.isArray(d.stages) || d.stages.length > 40) return fail();
+      var json = await inflateRaw(base64urlToBytes(payload));
+      if (tooDeep(json)) return fail();
+      // Every number must be a finite double: JSON.parse reads 1e999 as Infinity, so the reviver (which sees every
+      // value, also under unknown keys) refuses it. NaN / Infinity literals and other non-JSON text already throw.
+      var snap = JSON.parse(json, function (key, value) {
+        if (typeof value === 'number' && !isFinite(value)) throw new Error('non-finite number');
+        return value;
+      });
+      var d;
+      if (isPlainObject(snap) && has(snap, 'v')) {
+        // Version 2 (the compact form): "v" must be 2 and "d" one drill.
+        d = expandV2(snap);
+      } else {
+        // Version 1: the whole snapshot, which must hold exactly one drill.
+        if (!snap || snap.kind !== 'drill' || !Array.isArray(snap.drills) || snap.drills.length !== 1) return fail();
+        d = snap.drills[0];
+      }
+      if (!isPlainObject(d) || typeof d.name !== 'string' || !Array.isArray(d.stages) || d.stages.length > 40) return fail();
       render(d);
     } catch (e) { fail(); }
   })();
