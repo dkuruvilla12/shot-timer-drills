@@ -12,6 +12,18 @@ export const TTL_SECONDS = 366 * 86400;        // a blob expires 366 days after 
 export const RENEW_AFTER_DAYS = 30;            // a GET re-writes the entry at most once per 30 days
 const DAY_MS = 86400000;
 
+// The API answers only on the site's own domain. The Pages project is also reachable at <project>.pages.dev and
+// <hash>.<project>.pages.dev, names that sit outside the zone's rate-limit rules and share the production KV namespace,
+// so a request that arrives on any other host is refused with the same 404 an unknown code gets.
+export const ALLOWED_HOSTS = ['shottimerdrills.com', 'www.shottimerdrills.com'];
+
+export function isAllowedHost(url) {
+  let host;
+  try { host = new URL(url).hostname.toLowerCase(); } catch (e) { return false; }
+  if (host.endsWith('.')) host = host.slice(0, -1);   // "shottimerdrills.com." is the same name
+  return ALLOWED_HOSTS.includes(host);
+}
+
 // Error bodies are generic on purpose: nothing about the request is echoed back.
 const MESSAGES = {
   400: 'Bad request.',

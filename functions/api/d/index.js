@@ -2,12 +2,13 @@
 // Contract: Documentation/Drill-Library-and-Links.md, section 2c. Needs the KV namespace binding DRILLS.
 // Nothing is logged: no bodies, codes, keys or IP addresses.
 import {
-  MAX_BLOB, errorResponse, jsonResponse, makeCode, methodNotAllowed,
+  MAX_BLOB, errorResponse, isAllowedHost, jsonResponse, makeCode, methodNotAllowed,
   putOptions, dayNumber, readBodyCapped, validateBlob,
 } from '../_lib.js';
 
 export async function onRequestPost(context) {
   const { request, env } = context;
+  if (!isAllowedHost(request.url)) return errorResponse(404);   // not the site's own domain (e.g. *.pages.dev)
 
   // 415: only application/octet-stream (a parameter such as ;charset is ignored).
   const type = (request.headers.get('Content-Type') || '').split(';')[0].trim().toLowerCase();

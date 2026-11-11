@@ -1,11 +1,12 @@
 // GET /api/d/:code: answer the stored blob. Contract: Documentation/Drill-Library-and-Links.md, section 2c.
 // Unknown and expired codes give the same 404. Nothing is logged: no bodies, codes, keys or IP addresses.
 import {
-  baseHeaders, dayNumber, errorResponse, isValidCode, methodNotAllowed, needsRenewal, putOptions,
+  baseHeaders, dayNumber, errorResponse, isAllowedHost, isValidCode, methodNotAllowed, needsRenewal, putOptions,
 } from '../_lib.js';
 
 export async function onRequestGet(context) {
-  const { env, params } = context;
+  const { env, params, request } = context;
+  if (!isAllowedHost(request.url)) return errorResponse(404);   // not the site's own domain (e.g. *.pages.dev)
   const code = Array.isArray(params.code) ? params.code[0] : params.code;
   if (!isValidCode(code)) return errorResponse(400);
   if (!env || !env.DRILLS) return errorResponse(503);
